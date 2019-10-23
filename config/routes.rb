@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'control_users/horas_user'
 
   get 'welcome/index'
+  post 'welcome/index'
   get 'welcome/documents'
 
   get 'evento/index'
@@ -23,6 +24,15 @@ Rails.application.routes.draw do
 
   get 'welcome/duvidas'
   get 'welcome/quem_somos'
+
+  post 'welcome/index'
+
+  post 'control_users/index'
+  post 'activities/index'
+  post 'welcome/documents'
+  post 'evento/index'
+  post 'duvida/index'
+  post 'welcome/quem_somos'
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
 

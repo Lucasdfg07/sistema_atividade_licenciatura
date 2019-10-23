@@ -14,6 +14,26 @@
 //= require jquery_ujs
 //= require activestorage
 //= require turbolinks
+$(document).ready(function(){
+   var tam = $(window).width();
+
+   if (tam >= 1024){
+     $("nav").show();
+     $(".exibir_menu").hide();
+     $(".navbar_mobile").hide();
+   }else{
+     $(".exibir_menu").show();
+     $("nav").hide();
+     $(".fundo_cortado").hide();
+     $(".borda_cortada").hide();
+     $(".borda_preenche").hide();
+     $("nav").css("position", "fixed");
+   }
+
+   $(".exibir_menu").click(function() {
+      $(".navbar_mobile").toggle(500);
+   });
+});
 
 $(document).ready(function(){
 $('#tipo').hide();

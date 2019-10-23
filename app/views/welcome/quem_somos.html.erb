@@ -1,3 +1,9 @@
+<button class="exibir_menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
 <nav class="fixed-left col-md-2">
   <div class="imagem_logo">
     <%= image_tag "IFF-RJ.jpeg" %>
@@ -25,8 +31,21 @@
   </ul>
 </nav>
 
+<div class="titulo">
+  <div class="fundo_cortado">
+    <div class="borda_preenche"></div>
+    <div class="borda_cortada"></div>
+  </div>
+
+  <div class="fundo">
+    <div class="titulo_sistema">
+      <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
+    </div>
+  </div>
+</div>
+
 <main class="container col-md-9">
-    <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
+    <br />
     <% if flash[:notice] %>
         <div class="notice"><%= flash[:notice] %></div>
     <% end %>
@@ -68,7 +87,7 @@
         <div class="quem_somos_div">
             <h4>Lucas Siqueira Fernandes</h4>
             <span>
-              Bolsista de apoio e desenvolvimento tecnológico - alunos do curso Sistema de informação - IFF campus Campos Centro
+              Bolsista de apoio e desenvolvimento tecnológico - aluno do curso Sistema de informação - IFF campus Campos Centro
             </span>
         </div>
 
@@ -97,5 +116,8 @@
     }
     .quem_somos_div {
       padding:20px;
+    }
+    .fundo_cortado {
+      height:300px;
     }
   </style>

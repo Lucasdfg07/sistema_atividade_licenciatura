@@ -2,7 +2,11 @@
 
   <h1>Exibindo Horas Cadastradas</h1>
 
+  <!-- A tabela consiste em exibir as horas totais, as horas máximas
+  e as horas cadastradas e aprovadas pelo aluno, obtendo o atributo cargahoraria[]
+  para a demonstração das horas somadas no array -->
   <table border="1" width="80%" class="table table-hover">
+    <!-- Exibição do atributo nome do usuário que solicitou a renderização da página -->
     <caption>Total de horas computadas (<%= current_user.nome %>)</caption>
     <tr>
     <th rowspan="10" style="text-align:center; padding-top:200px;">

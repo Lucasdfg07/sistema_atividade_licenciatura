@@ -1,7 +1,6 @@
 // Place all the styles related to the Welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
 .button_session input {
   background-color:white;
   border-radius:5px;
@@ -20,6 +19,7 @@
   margin-top:5px;
   color:#2e6da4;
 }
+
 .btn:hover {
   background-color:white;
   color:black;
@@ -29,6 +29,7 @@
 #tipo {
   margin-bottom:15px;
 }
+
 @media (max-width: 575.98px) {
   .container h1 {
     font-size:1.7em;

@@ -1,32 +1,50 @@
+<button class="exibir_menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
 <nav class="fixed-left col-md-2">
   <div class="imagem_logo">
     <%= image_tag "IFF-RJ.jpeg" %>
   </div>
-  <ul class="login_inicial">
   <% if user_signed_in? %>
-    <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
+    <ul class="login_inicial">
+      <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
+      <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
 
-    <% if current_user.role == "admin"  %>
-      <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
-    <% end %>
-    <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
-    <li><%= link_to "Documentação", welcome_documents_path, :class => "nav_li active"  %></li>
-    <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
-  </ul>
+      <% if current_user.role == "admin"  %>
+        <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
+      <% end %>
+      <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
+      <li><%= link_to "Documentação", welcome_documents_path, :class => "nav_li active"  %></li>
+      <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
+      <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
+      <li><%= link_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li"  %></li>
+      <li><%= link_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
+    </ul>
   <% else %>
-  <ul>
-      <%= link_to "Criar conta", new_user_registration_path, :class => "btn btn-primary"  %><br />
-      <%= link_to "Login", new_user_session_path, :class => "btn btn-primary"  %><br />
-    <% end %>
-  </ul>
+    <ul>
+        <%= link_to "Criar conta", new_user_registration_path, :class => "btn btn-primary"  %><br />
+        <%= link_to "Login", new_user_session_path, :class => "btn btn-primary"  %><br />
+    </ul>
+  <% end %>
 </nav>
 
+<div class="titulo">
+  <div class="fundo_cortado">
+    <div class="borda_preenche"></div>
+    <div class="borda_cortada"></div>
+  </div>
+
+  <div class="fundo">
+    <div class="titulo_sistema">
+      <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
+    </div>
+  </div>
+</div>
+
 <div class="container col-md-9">
-    <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
     <% if flash[:notice] %>
         <div class="notice"><%= flash[:notice] %></div>
     <% end %>
@@ -77,10 +95,18 @@
 
       <div class="tabela col-md-12">
         <div class="page-header">
-          <h3>Ou clique aqui para ser redirecionado ao site da DIRLIC.</h3>
+          <h3>Para ser redirecionado ao site da DIRLIC</h3>
         </div>
 
         <a href="https://licenciaturas.centro.iff.edu.br" class="btn btn-primary">Clique Aqui</a>
+      </div>
+
+      <div class="tabela col-md-12">
+        <div class="page-header">
+          <h3>Para acessar os arquivos do projeto no GitHub</h3>
+        </div>
+
+        <a href="https://github.com/kennyamiranda/Sistema-de-registro-das-ATPAs" style="background-color:rgba(10,10,10,0.9); color:white;" class="btn">Clique Aqui</a>
       </div>
     <% end %>
 </div>
@@ -103,5 +129,8 @@
     }
     .tabela a {
       margin-top:-10px;
+    }
+    .fundo_cortado {
+      height:330px;
     }
   </style>
