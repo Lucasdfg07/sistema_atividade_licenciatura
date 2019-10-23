@@ -10,10 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require activestorage
-//= require turbolinks
+//= require jquery3
+//= require popper
+//= require bootstrap
+
 $(document).ready(function(){
    var tam = $(window).width();
 
@@ -24,9 +24,6 @@ $(document).ready(function(){
    }else{
      $(".exibir_menu").show();
      $("nav").hide();
-     $(".fundo_cortado").hide();
-     $(".borda_cortada").hide();
-     $(".borda_preenche").hide();
      $("nav").css("position", "fixed");
    }
 
@@ -80,3 +77,66 @@ function ValidaTipo() {
 
 function div_index_activities() {
 }
+
+$(document).ready(function() {
+  $('.info_concedente').mouseover(function() {
+    $('.rotate_info').show(400);
+    $('.div_concedente').show(400);
+  });
+
+  $('.info_concedente').mouseleave(function() {
+    $('.rotate_info').hide(200);
+    $('.div_concedente').hide(200);
+  });
+});
+
+$(document).ready(function() {
+  $('.clausulas').hide();
+  $('.conteudo').show();
+
+  $('.confirmacao_preenchimento').slideDown(300);
+  $('.clausulas_conteudo').slideDown(300);
+  $('.clausulas_conteudo').css("background-color", "rgba(10,10,10,0.6)");
+
+  $('.confirma_preenchimento').click(function() {
+    $('.confirmacao_preenchimento').slideUp(300);
+    $('.clausulas_conteudo').slideUp(300);
+  });
+
+  $('.avancar').click(function() {
+    $('.clausulas').show(800);
+    $('.clausulas_conteudo').show(800);
+    $('.clausulas_conteudo').css("background-color", "rgba(10,10,10,0.6)");
+  });
+
+  $('.cancelar').click(function() {
+    $('.clausulas').hide(800);
+    $('.clausulas_conteudo').hide(800);
+  });
+
+  $('.btn1').mouseover(function() {
+      $('.div_federal').slideDown();
+  });
+
+  $('.div_federal').mouseleave(function() {
+      $('.div_federal').slideUp();
+  });
+
+  $('.btn2').mouseover(function() {
+      $('.div_federal2').slideDown();
+  });
+
+  $('.div_federal2').mouseleave(function() {
+      $('.div_federal2').slideUp();
+  });
+
+  $('.desaparece_botao').click( function() {
+    $('.desaparece_botao').hide(700);
+  });
+});
+
+$(function() {
+  setTimeout(function(){
+    $('.alert').slideUp(500);
+  }, 2500);
+});

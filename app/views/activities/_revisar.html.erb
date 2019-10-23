@@ -1,0 +1,49 @@
+<table class="table table-hover table_admin">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Grupo</th>
+      <th>Horas computadas</th>
+      <th>Data do evento</th>
+      <th>Instituição / Evento</th>
+      <th>Relatório de Atividade</th>
+      <th>Aluno</th>
+      <th>Status</th>
+      <th>Profissional responsavel</th>
+      <th>Observação do profissional</th>
+      <% if current_user.role == "admin" %>
+      <th colspan="2">Ação</th>
+      <% else %>
+      <th colspan="3">Ação</th>
+      <% end %>
+      <th>Relatório de Horas do Aluno</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activities.each do |activity| %>
+      <% if activity.status == "Revisar"%>
+        <tr>
+         <td class="titulo"><p><%= activity.titulo %></p></td>
+         <td class="grupo"><p><%= activity.nome_grupo %></p></td>
+         <td><%= activity.hora_computada %></td>
+         <td><%= activity.data_evento %></td>
+         <td><%= activity.local_realizacao_atividade %> / <%= activity.nome_do_evento %></td>
+         <td class="relatorio"><p><%= activity.relatorio %></p></td>
+         <td><%= activity.user.nome %></td>
+         <td><%= activity.status %></td>
+         <td><%= activity.edited_by %></td>
+         <td><%= activity.feedback %></td>
+         <% if current_user.role != "admin" %>
+          <td><%= link_to 'Exibir', activity %></td>
+          <td></td>
+         <% else %>
+          <td><%= link_to 'Analisar', edit_activity_path(activity) %></td>
+         <% end %>
+         <td></td>
+         <td><%= link_to 'Tabela de Horas', activities_path(@users, @activities,:nome => activity.user.nome, :format => :pdf), target: "_blank", :class => "btn btn-default" %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

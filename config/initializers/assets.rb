@@ -2,9 +2,7 @@
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
-Rails.application.config.assets.precompile += %w( css_bootstrap/bootstrap.min.css )
 Rails.application.config.assets.precompile += %w( devise.css )
-Rails.application.config.assets.precompile += %w( js_bootstrap/bootstrap.min.js )
 Rails.application.config.assets.precompile += %w( registration.js )
 Rails.application.config.assets.precompile += %w( jquery-1.9.1.js )
 

@@ -1,54 +1,8 @@
-<button class="exibir_menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-<nav class="fixed-left col-md-2">
-  <div class="imagem_logo">
-    <%= image_tag "IFF-RJ.jpeg" %>
-  </div>
-  <% if user_signed_in? %>
-    <ul class="login_inicial">
-      <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
-
-      <% if current_user.role == "admin"  %>
-        <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
-      <% end %>
-      <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
-      <li><%= link_to "Documentação", welcome_documents_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li active"  %></li>
-      <li><%= link_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
-    </ul>
-  <% else %>
-    <ul>
-        <%= link_to "Criar conta", new_user_registration_path, :class => "btn btn-primary"  %><br />
-        <%= link_to "Login", new_user_session_path, :class => "btn btn-primary"  %><br />
-    </ul>
-  <% end %>
-</nav>
-
-<div class="titulo">
-  <div class="fundo_cortado">
-    <div class="borda_preenche"></div>
-    <div class="borda_cortada"></div>
-  </div>
-
-  <div class="fundo">
-    <div class="titulo_sistema">
-      <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
-    </div>
-  </div>
-</div>
-
 <div class="container col-md-9">
-    <br />
     <h5>Bem vindo(a) à tela de Dúvidas e Contato</h5>
     <% if current_user.role != "admin" %>
-    <small>Ao publicar alguma dúvida, aguarde a resposta de algum supervisor, professor ou semelhante.</small>
+    <small>Ao publicar alguma dúvida, aguarde a resposta de algum supervisor, professor ou semelhante.</small><br />
+    <small>Assim que a pergunta for respondida, a resposta aparecerá logo abaixo da pergunta direcionada.</small>
     <% end %>
 
     <%= form_with(model: @duvida, url: {action: "update"}, local: true) do |f| %>
@@ -57,12 +11,10 @@
         <div class="notice" style="color:green"><%= flash[:notice] %></div>
     <% end %>
 
-    <!-- Foreach de dúvidas anexadas no banco de dados pela ordenação decrescente do Id -->
     <% @duvidas.order("id desc").each do |duvida| %>
       <div class="panel">
         <div class="panel-body">
           <h3><%= duvida.duvida %></h3>
-          <!-- Caso a coluna de resposta não esteja em branco, então a resposta é exibida. -->
           <% if duvida.resposta.present? %>
             <div class="resposta">
               <h5><b><i>Resposta:</i></b> <%= duvida.resposta %></h5>
@@ -76,15 +28,17 @@
       </div>
     <% end %>
 
-    <footer>
-      <div class="comentario col-md-11">
-        <%= f.text_area :duvida, :placeholder => "Digite sua Dúvida" %>
-      </div>
+    <% if current_user.role != "admin" %>
+      <footer class="row">
+        <div class="comentario col-md-11">
+          <%= f.text_area :duvida, :placeholder => "Digite sua Dúvida" %>
+        </div>
 
-      <div class="button_session col-md-1">
-        <%= f.submit "Salvar" %>
-      </div>
-    </footer>
+        <div class="button_session col-md-1">
+          <%= f.submit "Salvar" %>
+        </div>
+      </footer>
+    <% end %>
 
       <style type="text/css">
         .container {
@@ -93,6 +47,9 @@
         .panel {
           border:2px solid rgba(0,0,0,0.2);
           border-radius:20px;
+          margin-top:10px;
+          background-color: rgba(244,244,244,0.7);
+          padding:20px;
         }
         .panel h3 {
           text-align:center;
@@ -100,6 +57,9 @@
         }
         .resposta {
           text-align:center;
+        }
+        .panel a:hover {
+          background: none;
         }
         .duvida_editar {
           text-align:center;
@@ -126,14 +86,8 @@
           border-top-right-radius:10px;
         }
         @media (max-width: 991.98px) {
-          .comentario, .button_session {
-            display: inline;
-          }
-          footer {
-            width:80%;
-          }
-          .comentario textarea {
-            width:60%;
+          .button_session {
+            margin-left: -20px;
           }
         }
       </style>

@@ -1,24 +1,23 @@
 <div class="container">
   <% if current_user.role == "admin" %>
-    <h1>Analisando Atividade</h1>
+  <h1>Analisando Atividade</h1>
   <% else %>
-    <h1>Editando Atividade</h1>
+  <h1>Editando Atividade</h1>
   <% end %>
-
-  <!-- Renderização do arquivo _form -->
-  <div class="col-md-3">
-  <%= render 'form', activity: @activity %>
-  <% if current_user.role == "admin" %>
-      <%= link_to 'Voltar', activities_path, :class => "btn btn-primary"  %>
-  <% end %>
-  </div>
-
-  <!-- Caso o usuário seja administrador, a tabela _show será renderizada -->
-  <% if current_user.role == "admin" %>
-    <div class="col-md-7 tabela_div">
-      <%= render 'show', activity: @activity %>
+  <div class="row">
+    <div class="col-md-4">
+    <%= render 'form', activity: @activity %>
+    <% if(current_user.role == "admin") %>
+        <%= link_to 'Voltar', activities_path, :class => "btn btn-primary"  %>
+    <% end %>
     </div>
-  <% end %>
+
+    <% if current_user.role == "admin" %>
+      <div class="col-md-7 tabela_div">
+        <%= render 'show', activity: @activity %>
+      </div>
+    <% end %>
+  </div>
 
 
   <style type="text/css">
@@ -30,8 +29,14 @@
       width:700px!important;
     }
     .tabela_div {
-      margin-top:-45px;
+      margin-top:-75px;
       margin-left: 70px;
+    }
+    @media (max-width: 767.98px) {
+      .tabela_div {
+        margin-top: 30px;
+        margin-left: -10px;
+      }
     }
   </style>
 </div>

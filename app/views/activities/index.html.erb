@@ -1,26 +1,16 @@
-<button class="exibir_menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-<div class="container">
+  <div class="container">
   <p id="notice"><%= notice %></p>
 
   <h1>Atividades cadastradas</h1>
 
-  <!-- Se a partição do código a seguir não for relacionada à
-  pagina de atividades, então o código encapsulado é renderizado -->
   <% if policy(@activities).index? %>
 
   <div class="botao_volta">
-    <%= button_to 'Voltar', welcome_index_path, :class => "btn btn-primary"  %>
+    <%= link_to 'Menu Inicial', welcome_index_path, :class => "btn btn-primary"  %>
   </div>
 
-  <!-- Código para busca de um aluno da página activities_path,
-  de parâmetros GET com os parâmetros de procura enviados pelo :search -->
   <%= form_tag(activities_path, method: :get, class: "form-group")  do %>
-    <%= text_field_tag :search, params[:search], class: "form-control text_form"%>
+    <%= text_field_tag :search, params[:search], class: "form-control text_form", placeholder: 'Pesquise por uma atividade!' %>
     <%= submit_tag ("Procurar"), class: "form-control button_form"%>
   <% end %>
 
@@ -29,87 +19,56 @@
     <b>Horas Computadas</b> e <b>Data do Evento</b>
   </small>
 
-  <!-- Início da exibição, pelo login administrativo, da
-  tabela de todas as atividades submetidas com pendência,
-  revisadas, deferidas e indeferidas -->
-  <table class="table table-hover table_admin">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Grupo</th>
-        <th>Horas computadas</th>
-        <th>Data do evento</th>
-        <th>Instituição / Evento</th>
-        <th>Relatório de Atividade</th>
-        <th>Aluno</th>
-        <th>Status</th>
-        <th>Profissional responsavel</th>
-        <th>Observação do profissional</th>
-        <% if current_user.role == "admin" %>
-        <th colspan="2">Ação</th>
+  <% if params['status'] == 'pendentes' || params['status'] == 'deferidos' ||
+        params['status'] == 'indeferidos' || params['status'] == 'revisar' || params['status'].nil? %>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <% if params['status'] == 'pendentes' || params['status'].nil? %>
+          <%= link_to "Pendentes", activities_path(:status => 'pendentes'), class: 'nav-link active' %>
         <% else %>
-        <th colspan="3">Ação</th>
+          <%= link_to "Pendentes", activities_path(:status => 'pendentes'), class: 'nav-link' %>
         <% end %>
-        <th>Relatório de Horas do Aluno</th>
-      </tr>
-    </thead>
+      </li>
 
-    <tbody>
-      <% @activities.each do |activity| %>
-        <% if activity.status == "Pendente" || activity.status == "Revisar"%>
-          <tr>
-           <td class="titulo"><p><%= activity.titulo %></p></td>
-           <td class="grupo"><p><%= activity.nome_grupo %></p></td>
-           <td><%= activity.hora_computada %></td>
-           <td><%= activity.data_evento %></td>
-           <td><%= activity.local_realizacao_atividade %> / <%= activity.nome_do_evento %></td>
-           <td class="relatorio"><p><%= activity.relatorio %></p></td>
-           <td><%= activity.user.nome %></td>
-           <td><%= activity.status %></td>
-           <td><%= activity.edited_by %></td>
-           <td><%= activity.feedback %></td>
-           <% if current_user.role != "admin" %>
-            <td><%= link_to 'Exibir', activity %></td>
-            <td></td>
-           <% else %>
-            <td><%= link_to 'Analisar', edit_activity_path(activity) %></td>
-           <% end %>
-           <td></td>
-           <td><%= link_to 'Tabela de Horas', activities_path(@users, @activities,:nome => activity.user.nome, :format => :pdf), target: "_blank", :class => "btn btn-default" %></td>
-          </tr>
+      <li class="nav-item">
+        <% if params['status'] == 'deferidos' %>
+          <%= link_to "Deferidos", activities_path(:status => 'deferidos'), class: 'nav-link active' %>
+        <% else %>
+          <%= link_to "Deferidos", activities_path(:status => 'deferidos'), class: 'nav-link' %>
         <% end %>
-      <% end %>
+      </li>
 
-      <% @activities.each do |activity| %>
-        <% if activity.status == "Deferido" || activity.status == "Indeferido"%>
-          <tr>
-            <td class="titulo"><p><%= activity.titulo %></p></td>
-            <td class="grupo"><p><%= activity.nome_grupo %></p></td>
-            <td><%= activity.hora_computada %></td>
-            <td><%= activity.data_evento %></td>
-            <td><%= activity.local_realizacao_atividade %> / <%= activity.nome_do_evento %></td>
-            <td class="relatorio"><p><%= activity.relatorio %></p></td>
-            <td><%= activity.user.nome %></td>
-            <td><%= activity.status %></td>
-            <td><%= activity.edited_by %></td>
-            <td><%= activity.feedback %></td>
-           <td><%= link_to 'Exibir', activity %></td>
-           <td><%= link_to 'Reavaliar', edit_activity_path(activity) %></td>
-           <td><%= link_to 'Tabela de Horas', activities_path(@users, @activities,:nome => activity.user.nome, :format => :pdf), target: "_blank", :class => "btn btn-default" %></td>
-          </tr>
+      <li class="nav-item">
+        <% if params['status'] == 'indeferidos' %>
+          <%= link_to "Indeferidos", activities_path(:status => 'indeferidos'), class: 'nav-link active' %>
+        <% else %>
+          <%= link_to "Indeferidos", activities_path(:status => 'indeferidos'), class: 'nav-link' %>
         <% end %>
-      <% end %>
+      </li>
 
-    </tbody>
-  </table>
+      <li class="nav-item">
+        <% if params['status'] == 'revisar' %>
+          <%= link_to "A revisar", activities_path(:status => 'revisar'), class: 'nav-link active' %>
+        <% else %>
+          <%= link_to "A revisar", activities_path(:status => 'revisar'), class: 'nav-link' %>
+        <% end %>
+      </li>
+    </ul>
+
+    <% if params['status'].present? %>
+      <%= render params['status'], activity: @activity %>
+    <% else %>
+      <%= render 'pendentes', activity: @activity %>
+    <% end %>
+
+  <% else %>
+    <%= render 'pendentes', activity: @activity %>
+  <% end %>
 
   <br>
 
   <% else %>
-  <!-- Caso o usuário não seja um administrador, esse encapsulamento é renderizado -->
-  <!-- Separação em 3 colunas dos botôes de cadastro, visualização da tabela de horas e a visualização das horas em PDF -->
-  <div class="col-md-12" onmouseover="index_activities_slide()">
-    <%= button_to 'Voltar', welcome_index_path, :class => "btn btn-primary"  %>
+  <div class="col-md-12 row" onmouseover="index_activities_slide()">
     <div class="col-md-3">
       <%= link_to 'Cadastrar Atividade', new_activity_path, :class => "btn btn-danger slide3"  %>
     </div>
@@ -121,17 +80,20 @@
     <div class="col-md-3">
       <%= link_to 'Gerar Relatório Completo', export_activity_path(current_user), target: "_blank", :class => "btn btn-primary slide2"  %>
     </div>
+
+    <div class="col-md-3">
+      <%= link_to 'Voltar ao menu inicial', welcome_index_path, :class => "btn btn-warning voltar"  %>
+    </div>
   </div>
 
-  <!-- Separação em 3 colunas das divs de explicação referente a cada botão. -->
-  <div class="col-md-12 info_index">
+  <div class="col-md-12 info_index row">
     <div class="col-md-3">
       <div class="slidedown3" style="display:none;">
         <small style="color:red">Clique em <b>Cadastrar Atividade</b> para cadastrar uma nova atividade para aprovação.</small>
           <ul>
             <small style="color:#8B0000"><li>Ao cadastrar uma atividade, ela ficara com o status <i>Pendente</i>. Isso indica que já foi encaminhada
               para o(a) avaliador(a), e necessita passar pela avaliação do(a) mesmo(a).</li></small>
-            <small style="color:#8B0000"><li>Ao passar pela avaliação e o(a) avaliador(a) realizar a avaliação, a atividade assumirá o status de <i>Deferido (Atividade é contabilizada na <b>Tabela de Horas</b>)</i>,
+            <small style="color:#8B0000"><li>Ao passar pela avaliação e o(a) avaliador(a) salvar a avaliação, a atividade assumirá o status de <i>Deferido (Atividade é contabilizada na <b>Tabela de Horas</b>)</i>,
               <i>Indeferido (Atividade não é contabilizada na <b>Tabela de Horas</b>)</i>, ou <i>Revisar (Avaliador(a) coloca atividade em "espera" para posterior revisão da mesma)</i>.</li></small>
             <small style="color:#8B0000"><li>Ao ser avaliada, são preenchidos os campos 'Profissional Responsável' com o nome do(a) profissional(a) que realizou a avaliação,
               e 'Observação do profissional' com o feedback dado pelo(a) avaliador(a).</li></small>
@@ -141,8 +103,8 @@
 
     <div class="col-md-3">
       <div class="slidedown1" style="display:none;">
-        <small style="color: green">Clique em <b>Exibir horas cadastradas</b> para visualizar todas as horas contabilizadas,
-          e em que grupo foram direcionadas.</small>
+        <small style="color: green">Clique em <b>Exibir horas cadastradas</b> para visualizar as todas horas contabilizadas,
+          e em que foram contabilizadas.</small>
       </div>
     </div>
 
@@ -154,12 +116,9 @@
     </div>
   </div>
 
-  <br />
-  <br />
-  <br />
-  <!-- Campo de busca por uma determinada atividade, na visualização do aluno -->
+
   <%= form_tag(activities_path, method: :get, class: "form-group")  do %>
-    <%= text_field_tag :search, params[:search], class: "form-control text_form"%>
+    <%= text_field_tag :search, params[:search], class: "form-control text_form", placeholder: 'Pesquise por uma atividade!' %>
     <%= submit_tag ("Procurar"), class: "form-control button_form"%>
   <% end %>
 
@@ -189,6 +148,11 @@
     </thead>
 
     <tbody>
+      <% if @atividades_cadastradas == 0 %>
+        <hr />
+        <h4>Não existem atividades cadastradas ainda!</h4>
+      <% end %>
+
       <% @activities.each do |activity| %>
         <tr>
           <td class="titulo"><p><%= activity.titulo %></p></td>
@@ -207,7 +171,7 @@
           <% elsif activity.status == "Pendente" %>
             <td><%= link_to 'Exibir', activity %></td>
             <td><%= link_to 'Editar', edit_activity_path(activity) %></td>
-            <td><%= link_to 'Apagar', activity, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
+            <td><%= link_to 'Apagar', delete_path(id: activity), data: { confirm: 'Tem certeza?' } %></td>
           <% elsif activity.status == "Revisar" %>
             <td><%= link_to 'Exibir', activity %></td>
             <td><%= link_to 'Editar', edit_activity_path(activity) %></td>
@@ -222,6 +186,13 @@
 </div>
 
 <style type="text/css">
+  .nav-tabs {
+    font-size: 1em;
+    padding: 5px;
+  }
+  .nav-link:hover {
+    background:none;
+  }
   .text_form {
     width:80%;
   }
@@ -240,11 +211,19 @@
     background-color:rgba(230,230,230,0.6);
     border-radius:15px;
     margin-top:-25px;
+    margin-left:30px;
     padding:20px;
   }
   .slidedown3 {
     margin-left:-15px;
     width:500px;
+  }
+  .slidedown2 {
+    height:300px;
+  }
+  .slide1, .slide2, .slide3, .voltar {
+    color: black!important;
+    background-color:white;
   }
   td , th {
     border:1px solid black;
@@ -253,6 +232,7 @@
   table {
     border:2px solid black;
     text-align: center;
+    margin-top:-5px;
   }
   td p {
     white-space: nowrap;
@@ -274,59 +254,25 @@
   .col-md-3 > a {
     margin-left:-15px;
   }
-  .btn:hover {
-    padding:6px 12px;
-  }
- .btn-danger:hover {
-   background-color:red;
-   color:white;
- }
 
 
   @media (max-width: 575.98px) {
-    .container h1 {
-      font-size:1.7em;
-    }
-    table {
-      font-size:0.48em;
-    }
-    td {
-      font-size:1.05em;
-    }
     .button_form {
       width:100px;
     }
   }
 
   @media (max-width: 767.98px) {
-    .container h1 {
-      font-size:2em;
-    }
-    table {
-      font-size:0.56em;
+    .grupo p {
+      white-space: nowrap!important;
+      width: 150px!important;
+      overflow: hidden!important;
+      text-overflow:  ellipsis!important;
+      text-align: center!important;
+      margin-left:33%;
     }
     .table_admin {
-      margin-left: -20px;
-    }
-    td {
-      font-size:1.05em;
-    }
-  }
-  @media (max-width: 991.98px) {
-    .navbar {
-      display: none;
-    }
-    .exibir_menu {
-      display: block;
-    }
-    .navbar_mobile {
-      position: fixed;
+      margin-left:-10px;
     }
   }
 </style>
-
-<script type="text/javascript">
-  $(".exibir_menu").click(function() {
-     $(".navbar_mobile").toggle(500);
-  });
-</script>

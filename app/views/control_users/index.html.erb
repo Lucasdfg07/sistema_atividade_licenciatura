@@ -1,43 +1,9 @@
-<button class="exibir_menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-<nav class="fixed-left col-md-2">
-  <div class="imagem_logo">
-    <%= image_tag "IFF-RJ.jpeg" %>
-  </div>
-  <% if user_signed_in? %>
-    <ul class="login_inicial">
-      <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
-
-      <% if current_user.role == "admin"  %>
-        <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li active"  %></li>
-      <% end %>
-      <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
-      <li><%= link_to "Documentação", welcome_documents_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
-    </ul>
-  <% else %>
-    <ul>
-        <%= link_to "Criar conta", new_user_registration_path, :class => "btn btn-primary"  %><br />
-        <%= link_to "Login", new_user_session_path, :class => "btn btn-primary"  %><br />
-    </ul>
-  <% end %>
-</nav>
-
 <div class="container col-md-9">
   <p id="notice"><%= notice %></p>
   <h1>Usuários</h1>
 
-  <!-- Código para pesquisa dos usuários cadastrados com retorno para a página control_users_index_path -->
   <%= form_tag(control_users_index_path, method: :get, class: "form-group")  do %>
-    <%= text_field_tag :search, params[:search], class: "form-control text_form"%>
+    <%= text_field_tag :search, params[:search], class: "form-control text_form", placeholder: 'Pesquise por um aluno!' %>
     <%= submit_tag ("Procurar"), class: "form-control button_form"%>
   <% end %>
 
@@ -53,16 +19,14 @@
         <th scope="col">Role</th>
         <th scope="col">Licenciatura</th>
         <th scope="col"">Relatório de Horas</th>
-        <!-- <th scope="col"">Modificação de Horas</th> -->
+        <th scope="col"">Modificação de Horas</th>
       </tr>
     </thead>
 
     <tbody>
-        <!-- Foreach para a database User -->
         <% @users.each do |user| %>
           <tr>
             <td>
-              <!-- Função para caso a imagem exista, então o conteúdo será exibido -->
               <% if user.avatar.url.present? %>
                 <%= image_tag(user.avatar.url) %>
               <% end %>
@@ -72,7 +36,7 @@
             <td><%= user.role %></td>
             <td><%= user.licenciatura %></td>
             <td><%= link_to 'Relatório do(a) '+user.nome, control_users_horas_user_path(:nome => user.nome), target: "_blank", :class => "btn btn-danger" %></td>
-            <!-- <td><%= link_to 'Modificar Horas', new_activity_path(:id => user.id, :nome => user.nome), :class => "btn btn-success"  %> <br /></td> -->
+            <td><%= link_to 'Modificar Horas', new_activity_path(:id => user.id, :nome => user.nome), :class => "btn btn-success"  %> <br /></td>
           </tr>
         <% end %>
       </tbody>
@@ -98,19 +62,14 @@
     width:50px;
     border-radius:100%;
   }
-  .btn-success:hover {
-    background-color:green;
-    color:white;
-    padding:6px 12px;
+  .btn-success {
+    background-color:white;
+    color:black!important;
+    font-size:1.1em;
   }
-  .btn-danger:hover {
-    background-color:red;
-    color:white;
-    padding:6px 12px;
-  }
-  @media (max-width: 991.98px) {
-    tr td, tr th, .btn-danger {
-      font-size: 0.8em;
-    }
+  .btn-danger {
+    background-color:white;
+    color:black!important;
+    font-size:1.1em;
   }
 </style>

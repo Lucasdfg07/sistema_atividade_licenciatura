@@ -1,7 +1,7 @@
+
 <div class="container">
   <%= form_with(model: activity, local: true) do |form| %>
 
-    <!-- Renderização de algum erro durante o save da atividade. -->
     <% if activity.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(activity.errors.count, "error") %> atividade bloqueada de ser salva:</h2>
@@ -14,8 +14,7 @@
       </div>
     <% end %>
 
-
-    <% if policy(@activity).index? && current_user.role == "admin" || current_user.role !="admin" %>
+    <% if policy(@activity).index? & current_user.role == "admin" || current_user.role !="admin" %>
     <div class="field">
       <%= form.label :horas_computadas %>
       <%= form.number_field :hora_computada, min:0, step: :any, required:true %>
@@ -99,22 +98,21 @@
       <%= form.text_field :nome_do_evento, required:true %>
     </div>
 
-
+    <br />
     <% if current_user.role != "admin" %>
       <div class="field text_aluno">
     <% else %>
       <div class="field">
     <% end %>
-      <%= form.label :relatorio, 'Relatório de Atividade'%>
-      (Escreva um resumo da ATPA realizada, destacando, além da sua importância,
-      a relação dela com seu curso, bem como aspectos positivos e negativos para sua formação.)<br>
+      <%= form.label :relatorio, 'Relatório de Atividade'%> <br />
+      <small>(Escreva um resumo da ATPA realizada, destacando, além da sua importância,
+      a relação dela com seu curso, bem como aspectos positivos e negativos para sua formação.)</small><br />
       <%= form.text_area :relatorio, required:true %>
     </div>
 
     <div class="field">
       <%= form.label 'Documento' %>
       <small style="color: red">(Só será permitido arquivo em PDF, JPEG ou PNG)</small>
-      <br />
       <br />
       <%= form.file_field :documents, multiple: true, accept: 'application/pdf, image/png,image/gif,image/jpeg', required:true %>
     </div>
@@ -131,7 +129,7 @@
           </div>
 
           <div class="field">
-            <%= form.label :observação_do_profissional%>
+            <%= form.label :observação_do_profissional%> <br />
             <%= form.text_area :feedback %>
           </div>
 
@@ -145,7 +143,7 @@
           </div>
 
           <div class="field">
-            <%= form.label :observação_do_profissional %>
+            <%= form.label :observação_do_profissional %> <br />
             <%= form.text_area :feedback %>
           </div>
 

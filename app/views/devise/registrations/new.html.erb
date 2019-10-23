@@ -1,35 +1,26 @@
 <div class="container">
-  <div class="titulo">
-    <div class="fundo2">
-      <div class="titulo_sistema2">
-        <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
-      </div>
-    </div>
-  </div>
-
-  <br />
   <h3>Registrar-se</h3>
 
-  <!-- //Formulário de registro de um novo usuário habilitado pelo Devise -->
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
-  <div class="col-md-12 nome_email">
+  <div class="col-md-12 nome_email row">
     <div class="col-md-6">
-      <!-- //div de separação por label e input com seus respectivos valores para armazenamento no banco de dados -->
       <div class="field form-group nome_label">
         <%= f.label :nome %><br />
         <%= f.text_field :nome ,required:true%> <br />
       </div>
 
       <div class="field form-group">
-        <%= f.label :licenciatura %><br />
-        <%= select("user","licenciatura",['Letras', 'Matemática', 'Ciências da Natureza', 'Educação Física', 'Teatro',
-          'Geografia'],{include_blank:"Selecione"})%>
+        <%= f.label :licenciatura_e_periodo %>  <br />
+        <%= select("user","licenciatura",['Ciências da Natureza', 'Educação Física', 'Geografia', 'Letras: Portugês e Literaturas',
+        'Matemática','Teatro', 'Napp/Dirlic'],{include_blank:"Selecione"})%>
+        <%= f.select :periodo,['5.º', '6.º', '7.º', '8.º', 'Pedagoga/TAE'], {include_blank:"Selecione"}, class:'periodo_input' %>
       </div>
 
+       <br />
 
       <div class="field form-group select-group">
-        <%= f.label :início_do_curso, :class => "inicio_label" %>
+        <%= f.label :início_do_curso %> <br />
         <%= f.select :inicio_ano, @anos = [ 2008.1, 2008.2, "",2009.1, 2009.2, " ", 2010.1, 2010.2, " ",
         2011.1, 2011.2, " ", 2012.1, 2012.2, " ",
         2013.1, 2013.2, " ", 2014.1, 2014.2, " ",
@@ -42,6 +33,7 @@
         2027.1, 2027.2, " ", 2028.1, 2028.2, " " ], selected: "2005.2"%>
       </div>
 
+      <br />
 
       <div class="field form-group">
         <%= f.label :password %>
@@ -63,11 +55,14 @@
         <%= f.text_field :matricula ,require:true%>
       </div>
 
+      <br />
+
       <div class="field form-group select-group">
-        <%= f.label :previsão_de_término, :class => "termino_label" %>
+        <%= f.label :previsão_de_término %>  <br />
         <%= f.select :termino_ano, @anos, selected: "2019.1" %>
       </div>
 
+       <br />
 
       <div class="field form-group">
         <%= f.label :password_confirmation %><br />
@@ -76,36 +71,41 @@
     </div>
   </div>
 
-    <div class="foto_perfil">
-      <%= f.label 'Envie uma foto de perfil' %>
-      <!-- //Espaço para envio de uma foto para anexo de uma foto na coluna :avatar daquele usuário registrado. -->
-      <div class="foto_input">
-        <%= f.file_field :avatar, accept: 'image/gif, image/jpg, image/jpeg, image/png' %>
-      </div>
-
-      <div class="link link_button">
-        <div class="col-md-6">
-          <%= link_to "Voltar", welcome_index_path, :class => "btn btn-primary direita"  %>
-        </div>
-
-        <!-- //Botão de submit. Para salvar o arquivo no banco de dados e chamar o método para criação do registro -->
-        <div class="actions form-group col-md-6 registro">
-          <%= f.submit "Registrar", :class => "btn btn-warning esquerda" %>
-        </div>
-      </div>
+  <div class="foto_perfil">
+    <%= f.label 'Envie uma foto de perfil' %>
+    <div class="foto_input">
+      <%= f.file_field :avatar, accept: 'image/gif, image/jpg, image/jpeg, image/png' %>
     </div>
+
+    <div class="link link_button row">
+      <div class="col-md-3"></div>
+
+      <div class="col-md-3">
+        <%= f.submit "Registrar", :class => "btn btn-warning direita" %>
+      </div>
+
+      <div class="actions form-group col-md-3 registro">
+        <%= link_to "Voltar", welcome_index_path, :class => "btn btn-primary esquerda"  %>
+      </div>
+
+      <div class="col-md-3"></div>
+    </div>
+  </div>
 <% end %>
 
   <style type="text/css">
     .container {
       text-align:center;
     }
-
+    .periodo_input {
+      width:10%;
+    }
     .nome_label input, .email_label input{
-      width:420px;
+      width:90%;
     }
     .link {
       margin-left:-5px;
+      margin-top:30px;
     }
     .link > .col-md-6 {
       margin-top:30px;
@@ -113,29 +113,13 @@
     select {
       width:200px;
     }
-    .registro input {
-      background-color:
-    }
-    .direita {
-      float:right;
-    }
-    .esquerda {
-      float:left;
-    }
-    .termino_label, .inicio_label {
-      padding-bottom:13px;
-    }
     .foto_input {
-      padding-left:38%;
+      padding-left:4%;
     }
-    .fundo_cortado {
-      background-color:rgb(240,240,240);
-      position: absolute;
-      height:170px;
-      width:100%;
-    }
-    .borda_cortada {
-      margin-top:15px;
+    @media (max-width: 767.98px) {
+      .btn-primary {
+        margin-top:30px;
+      }
     }
   </style>
 </div>

@@ -48,7 +48,7 @@ module GeneratePdf
         end
         pdf.move_down 20
         table_data = [["<b>Grupo/Subgrupo de Atividade</b>", "Horas Cadastradas"],
-                      ["<b>Grupo 1 ATIVIDADES DE EXTENSÃO / DE ENSINO</b>", "<b>#{user.cargahoraria[19]}<b>"],
+                      ["<b><u>Grupo 1 ATIVIDADES DE EXTENSÃO / DE ENSINO</u></b>", "<b>#{user.cargahoraria[19]}<b>"],
                       ["<b>1.1 Participação como ouvinte em Palestras, Seminários,
                         Congressos, Conferências, Simpósios, Fóruns, Encontros,
                         Mesas Redondas e similares</b>", "<b>#{user.cargahoraria[0]}<b>"],
@@ -67,7 +67,7 @@ module GeneratePdf
                       ["<b>1.8 Participação em Atividade de Monitoria, na área de formação,
                         no 2.º segmento do Ensino Fundamental, em Cursos de Nível
                         Médio e/ou em Curso Superior</b>", "<b>#{user.cargahoraria[7]}<b>"],
-                      ["<b>Grupo 2 ATIVIDADES ACADÊMICO CIENTÍFICO CULTURAIS", "<b>#{user.cargahoraria[20]}<b>"],
+                      ["<b><u>Grupo 2 ATIVIDADES ACADÊMICO CIENTÍFICO CULTURAIS</u></b>", "<b>#{user.cargahoraria[20]}<b>"],
                       ["<b>2.1 Participação como ouvinte na apresentação oral de Defesa do
                         Projeto de Qualificação de Trabalho de Conclusão Dissertação
                         e Tese), na área de formação e/ou em áreas afins à formação</b>", "<b>#{user.cargahoraria[8]}<b>"],
@@ -80,7 +80,7 @@ module GeneratePdf
                       ["<b>2.4 Participação como ouvinte em atividades artísticas e culturais
                         sob a supervisão de professor e/ou de profissional do
                         IFFluminense</b>", "<b>#{user.cargahoraria[11]}<b>"],
-                      ["<b>Grupo 3 PRODUÇÃO ACADÊMICO CIENTÍFICO CULTURAL...</b>", "<b>#{user.cargahoraria[21]}<b>"],
+                      ["<b><u>Grupo 3 PRODUÇÃO ACADÊMICO CIENTÍFICO CULTURAL...</u></b>", "<b>#{user.cargahoraria[21]}<b>"],
                       ["<b>3.1 Apresentação de trabalhos acadêmicos, científicos ou culturais
                         em instituições de âmbito local, regional, nacional e/ou
                         internacional</b>", "<b>#{user.cargahoraria[12]}<b>"],
