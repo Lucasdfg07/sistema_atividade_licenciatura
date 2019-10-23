@@ -4,7 +4,7 @@
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-     <%= link_to "Esqueceu a senha?", new_password_path(resource_name), :class => "btn btn-success" %> <br />
+     <%= link_to "Esqueceu a senha?", new_password_path(resource_name), :class => "btn btn-primary esqueceu"%>
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>

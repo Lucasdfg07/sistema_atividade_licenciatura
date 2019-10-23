@@ -18,8 +18,8 @@ module SistemaAtividdes
       :port => 587,
       :domain => "iff.edu.br",
       :authentication => :login,
-      :user_name => "noreply@iff.edu.br",
-      :password => "Senha!",
+      :user_name => "napp_dirlic.centro@iff.edu.br",
+      :password => "napp_dirlic123.",
       :enable_starttls_auto => true,
       :openssl_verify_mode  => 'none'
       }

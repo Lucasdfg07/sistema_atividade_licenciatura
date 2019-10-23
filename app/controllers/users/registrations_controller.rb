@@ -9,46 +9,47 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.update_without_password(params)
   end
 
-  # Realizar a criação de um novo usuário
+
   def after_sign_up_path_for(resource)
       @users = User.create(user_params_create)
 
       signed_in_root_path(resource)
   end
 
-  # Realizar a atualização dos dados de um usuário já existente
+
   def update
     @users = current_user.update(user_params)
 
     redirect_to welcome_index_path
   end
 
-  # Parâmetros para criação do usuário
+
   def user_params_create
-    params.require(:user).permit(:nome, :email, :matricula, :licenciatura, :inicio_ano, :termino_ano, :password, :password_confirmation, :avatar)
+    params.require(:user).permit(:nome, :email, :matricula, :licenciatura, :periodo, :inicio_ano, :termino_ano, :password, :password_confirmation, :avatar)
   end
-
-  # Parâmetros para atualização do usuário
+  # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:nome, :email, :matricula, :licenciatura, :inicio_ano, :termino_ano, :avatar)
+    params.require(:user).permit(:nome, :email, :matricula, :licenciatura, :periodo, :inicio_ano, :termino_ano, :avatar)
   end
 
-  # Parâmetros de criação
+  # If you have extra params to permit, append them to the sanitizer.
    def configure_sign_up_params
      devise_parameter_sanitizer.permit(:sign_up, keys: [:nome])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:matricula])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:licenciatura])
+     devise_parameter_sanitizer.permit(:sign_up, keys: [:periodo])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:inicio_ano])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:termino_ano])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:cargahoraria])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:avatar])
    end
 
-  # Parâmetros de atualização
+  # If you have extra params to permit, append them to the sanitizer.
    def configure_account_update_params
      devise_parameter_sanitizer.permit(:account_update, keys: [:nome])
      devise_parameter_sanitizer.permit(:account_update, keys: [:matricula])
      devise_parameter_sanitizer.permit(:account_update, keys: [:licenciatura])
+     devise_parameter_sanitizer.permit(:account_update, keys: [:periodo])
      devise_parameter_sanitizer.permit(:account_update, keys: [:inicio_ano])
      devise_parameter_sanitizer.permit(:account_update, keys: [:termino_ano])
      devise_parameter_sanitizer.permit(:account_update, keys: [:cargahoraria])

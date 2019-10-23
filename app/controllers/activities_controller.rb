@@ -8,7 +8,6 @@ class ActivitiesController < ApplicationController
   # GET /activities.json
   def index
     if current_user.role == "admin"
-        # Encapsulamento para a pesquisa dos parâmetros pelos alunos
         @activities = Activity.order(status: :DESC).where("titulo LIKE :search OR status LIKE :search OR relatorio LIKE :search OR edited_by LIKE :search OR nome_grupo LIKE :search OR local_realizacao_atividade LIKE :search OR relatorio LIKE :search OR status LIKE :search OR feedback LIKE :search OR edited_by LIKE :search OR nome_usuario LIKE :search OR nome_do_evento LIKE :search", search: "%#{params[:search]}%")
         @user = User.order(status: :DESC).where("nome LIKE :search", search: "%#{params[:search]}%")
         if @activities.exists? || @user.exists?
@@ -21,11 +20,13 @@ class ActivitiesController < ApplicationController
             @user = User.order(status: :DESC).where("nome LIKE :search", search: "%#{params[:search]}%".titleize)
           end
         end
-    else
+
+     else
+      @usuario = current_user.nome
       @activities = current_user.activities.order(status: :DESC).where("titulo LIKE :search OR status LIKE :search OR relatorio LIKE :search OR edited_by LIKE :search OR nome_grupo LIKE :search OR local_realizacao_atividade LIKE :search OR relatorio LIKE :search OR status LIKE :search OR feedback LIKE :search OR edited_by LIKE :search OR nome_do_evento LIKE :search", search: "%#{params[:search]}%")
+      @atividades_cadastradas = Activity.where("nome_usuario = '"+ @usuario +"'").count
     end
 
-    # Código para renderização do PDF
     respond_to do |format|
      format.html
      format.pdf do
@@ -47,8 +48,23 @@ class ActivitiesController < ApplicationController
 
   end
 
+  def deferidos
+    @activity = Activity.all
+  end
+
+  def indeferidos
+    @activity = Activity.all
+  end
+
+  def pendentes
+    @activity = Activity.all
+  end
+
+  def revisar
+    @activity = Activity.all
+  end
+
   # GET /activities/new
-  # Código para renderização da página "new"
   def new
     @activity = Activity.new
     @activity_grupo_0 = [ "Palestras", "Seminários", "Congressos", "Simpósios", "Fóruns", "Encontros", "Mesas Redondas e Similares"]
@@ -61,14 +77,12 @@ class ActivitiesController < ApplicationController
   end
 
   # GET /activities/1/edit
-  # Código para edição da atividade
   def edit
     @activity_grupo_0 = [ "Palestras", "Seminários", "Congressos", "Simpósios", "Fóruns", "Encontros", "Mesas Redondas e Similares"]
   end
 
   # POST /activities
   # POST /activities.json
-  # Código para criação da atividade
   def create
     @activity = Activity.new(activity_params)
     @activity.user = current_user
@@ -197,11 +211,14 @@ class ActivitiesController < ApplicationController
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
+
+    if current_user.role != "admin"
+      AaccMailer.envio_atividade(current_user).deliver
+    end
   end
 
   # PATCH/PUT /activities/1
   # PATCH/PUT /activities/1.json
-  # Código para atualização da atividade
   def update
     if current_user.role == "admin"
       @activity.edited_by = current_user.nome
@@ -220,7 +237,6 @@ class ActivitiesController < ApplicationController
 
   # DELETE /activities/1
   # DELETE /activities/1.json
-  # Código para exclusão da atividade
   def destroy
     @activity.destroy
     respond_to do |format|
@@ -229,7 +245,6 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  # Código para gerar o PDF das atividades por parte do aluno
   def export
     pdf = GeneratePdf::activity(current_user, current_user.activities)
     send_data pdf.render,

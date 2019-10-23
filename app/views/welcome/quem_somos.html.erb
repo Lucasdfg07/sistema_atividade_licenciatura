@@ -1,51 +1,4 @@
-<button class="exibir_menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-<nav class="fixed-left col-md-2">
-  <div class="imagem_logo">
-    <%= image_tag "IFF-RJ.jpeg" %>
-  </div>
-  <ul class="login_inicial">
-  <% if user_signed_in? %>
-    <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
-
-    <% if current_user.role == "admin"  %>
-      <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
-    <% end %>
-    <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
-    <li><%= link_to "Documentação", welcome_documents_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
-    <li><%= link_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li active"  %></li>
-    <li><%= link_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
-  </ul>
-  <% else %>
-  <ul>
-      <%= link_to "Criar conta", new_user_registration_path, :class => "btn btn-primary"  %><br />
-      <%= link_to "Login", new_user_session_path, :class => "btn btn-primary"  %><br />
-    <% end %>
-  </ul>
-</nav>
-
-<div class="titulo">
-  <div class="fundo_cortado">
-    <div class="borda_preenche"></div>
-    <div class="borda_cortada"></div>
-  </div>
-
-  <div class="fundo">
-    <div class="titulo_sistema">
-      <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
-    </div>
-  </div>
-</div>
-
 <main class="container col-md-9">
-    <br />
     <% if flash[:notice] %>
         <div class="notice"><%= flash[:notice] %></div>
     <% end %>
@@ -87,7 +40,7 @@
         <div class="quem_somos_div">
             <h4>Lucas Siqueira Fernandes</h4>
             <span>
-              Bolsista de apoio e desenvolvimento tecnológico - aluno do curso Sistema de informação - IFF campus Campos Centro
+              Bolsista de apoio e desenvolvimento tecnológico - alunos do curso Sistema de informação - IFF campus Campos Centro
             </span>
         </div>
 
@@ -116,8 +69,5 @@
     }
     .quem_somos_div {
       padding:20px;
-    }
-    .fundo_cortado {
-      height:300px;
     }
   </style>

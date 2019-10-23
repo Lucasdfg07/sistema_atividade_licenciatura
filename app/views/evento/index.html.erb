@@ -1,51 +1,4 @@
-<button class="exibir_menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-<nav class="fixed-left col-md-2">
-  <div class="imagem_logo">
-    <%= image_tag "IFF-RJ.jpeg" %>
-  </div>
-  <% if user_signed_in? %>
-    <ul class="login_inicial">
-      <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
-
-      <% if current_user.role == "admin"  %>
-        <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
-      <% end %>
-      <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
-      <li><%= link_to "Documentação", welcome_documents_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Eventos", evento_index_path, :class => "nav_li active"  %></li>
-      <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li"  %></li>
-      <li><%= link_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
-    </ul>
-  <% else %>
-    <ul>
-        <%= link_to "Criar conta", new_user_registration_path, :class => "btn btn-primary"  %><br />
-        <%= link_to "Login", new_user_session_path, :class => "btn btn-primary"  %><br />
-    </ul>
-  <% end %>
-</nav>
-
-<div class="titulo">
-  <div class="fundo_cortado">
-    <div class="borda_preenche"></div>
-    <div class="borda_cortada"></div>
-  </div>
-
-  <div class="fundo">
-    <div class="titulo_sistema">
-      <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
-    </div>
-  </div>
-</div>
-
 <div class="container col-md-9">
-    <br />
     <h5>Bem vindo(a) à tela de Eventos</h5>
     <%= form_with(model: @evento, url: {action: "create"}, local: true) do |f| %>
 
@@ -68,16 +21,15 @@
     </div>
 
     <% if current_user.role == "admin" %>
-      <footer>
+      <footer class="row">
         <div class="comentario col-md-8">
           <%= f.text_area :noticia, :placeholder => "Digite seu Comentário" %>
         </div>
 
-        <div class="button_session col-md-3">
-          <%= f.submit "Salvar" %>
-        </div>
-
         <div class="noticia_foto col-md-3">
+          <div class="button_session">
+            <%= f.submit "Salvar" %>
+          </div>
           <small>Ou Envie uma foto do evento</small>
           <%= f.file_field :noticia_foto, accept: 'image/gif, image/jpg, image/jpeg, image/png' %>
         </div>
@@ -85,9 +37,6 @@
     <% end %>
 
       <style type="text/css">
-        .container {
-          padding-bottom:150px;
-        }
         .panel {
           box-shadow: -3px 3px 15px rgba(200,200,200,0.3);
           border-radius:20px;
@@ -123,17 +72,6 @@
           position:fixed;
           bottom:0;
           width:70%;
-        }
-        @media (max-width: 991.98px) {
-          .comentario, .button_session, .noticia_foto {
-            display: inline;
-          }
-          footer {
-            width:80%;
-          }
-          .comentario textarea {
-            width:60%;
-          }
         }
       </style>
     <% end %>

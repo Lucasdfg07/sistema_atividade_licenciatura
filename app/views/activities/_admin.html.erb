@@ -21,7 +21,7 @@
     <div class="field">
       <%= form.label :horas_computadas %>
       <%= form.number_field :hora_computada, step: :any, required:true %><br />
-      <small>(Para retirar, utilize horas negativas.</small><br />
+      <small>(Para retirar, utilize horas negativas.</small>
       <small>Para somar, utilize horas positivas.)</small>
     </div>
 
@@ -111,9 +111,7 @@
         <%= form.submit "Salvar" %>
       </div>
     </div>
-
-    <%= stylesheet_link_tag "hide_div_activities.css" %>
-    <%= javascript_include_tag "application.js" %>
+    <%= link_to 'Voltar', control_users_index_path, class: 'btn btn-warning' %>
 
   <% end %>
   <style type="text/css">
@@ -123,12 +121,11 @@
     .container button{
       margin-left:15px;
     }
-    .panel {
-      width:250px;
-      padding:10px;
-    }
     .field textarea {
       height:100px;
+    }
+    .conteudo {
+      text-align: left;
     }
     small {
       color:purple;

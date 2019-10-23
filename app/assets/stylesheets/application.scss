@@ -1,0 +1,164 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @import "bootstrap";
+.exibir_menu {
+  border: 2px solid black;
+  height: 40px;
+  width:40px;
+  border-radius:10px;
+  position: absolute;
+  z-index: 9999;
+  margin-top:20px;
+  position: fixed;
+  display: none;
+  z-index: 9999;
+}
+.exibir_menu:hover {
+  background-color: white;
+}
+.alert {
+  position: absolute;
+  width: 100%;
+  opacity: 0.7;
+}
+.exibir_menu span {
+  display: block;
+  border: 1px solid black;
+  margin:5px 0px;
+}
+.navbar_mobile {
+  display: none;
+  margin-top:40px;
+  margin-left:-5px;
+  z-index: 9000;
+  width: 100%;
+}
+.navbar_mobile li {
+  font-size: 1.2em;
+}
+.navbar_mobile a, .navbar_mobile a:hover {
+  color: black;
+  text-decoration: none;
+}
+.nome li {
+  display:inline;
+}
+.nome {
+  margin-top:10px;
+  border:1px solid black;
+  border-radius:15px;
+  margin-bottom:30px;
+  padding:5px;
+  text-align:center;
+}
+.logo_perfil {
+  margin-left:10%;
+}
+.logo_perfil img {
+  padding:5px;
+}
+.logo_perfil img, .logo_perfil {
+  border-radius:100%;
+  height:150px;
+  width:150px;
+}
+.notice, .danger {
+  opacity:0.7;
+  text-align: center;
+}
+.notice p, .danger p {
+  font-size:1.2em;
+}
+.btn1, .btn2, .btn3 {
+  display: inline;
+}
+.botoes > .col > .btn-primary {
+  background-color:white;
+  color:#007bff;
+}
+.botoes > .col > .btn-primary:hover {
+  background-color:#007bff;
+  color:white;
+}
+
+.botoes > .col > .btn-secondary {
+  background-color:white;
+  color:#6c757d;
+}
+.botoes > .col > .btn-secondary:hover {
+  background-color:#6c757d;
+  color:white;
+}
+
+.botoes > .col > .btn-info {
+  background-color:white;
+  color:#17a2b8;
+}
+.botoes > .col > .btn-info:hover {
+  background-color:#17a2b8;
+  color:white;
+}
+.btn:hover {
+  color: white!important;
+}
+.contato_dirlic_pdf {
+  text-align: center;
+  font-size: 0.9em;
+}
+.div_concedente {
+  position: absolute;
+  line-height: 20px;
+  z-index: 9999;
+  box-shadow: -2px 2px 15px;
+  padding:15px;
+  background-color: white;
+  border-radius: 15px;
+  margin-top:-80px;
+  margin-left:-90px;
+  display: none;
+}
+.rotate_info {
+  position: absolute;
+  box-shadow: -2px 2px 15px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  margin-top:-25px;
+  transform: rotate(45deg);
+  display: none;
+}
+.info_concedente {
+  padding:4px 9px;
+  border-radius: 100%;
+  border: 1px solid blue;
+  color: blue;
+}
+.confirmacao_preenchimento {
+  margin-top:10%;
+  text-align: center;
+  background: rgba(250,250,250,0.9);
+  border-radius:10px;
+  box-shadow: -2px 2px 10px rgba(200,200,200,0.6);
+  padding:20px;
+  margin:100px 200px;
+  display: none;
+}
+.conteudo {
+  text-align:center;
+}
+.btn {
+  color: white!important;
+}
