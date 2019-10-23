@@ -13,7 +13,28 @@
     <%= favicon_link_tag asset_path('indice.png') %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="<% if user_signed_in? %> logado <% else %> deslogado <% end %>">
+      <% if user_signed_in? %>
+        <nav class="navbar_mobile fixed-left col-md-2">
+          <ul class="login_inicial">
+          <!-- //Código da barra de navegação visualizada após o login realizado com os redirecionamentos de cada página, em forma de lista, com suas respectivas classes para o manuseio do CSS. -->
+            <li><%= button_to "Menu Principal", welcome_index_path, :class => "nav_li active"  %></li>
+            <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
+
+            <% if current_user.role == "admin"  %>
+              <li><%= button_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
+            <% end %>
+
+            <li><%= link_to "Atividades", activities_path, :class => "nav_li" %></li>
+            <li><%= button_to "Documentação", welcome_documents_path, :class => "nav_li"  %></li>
+            <li><%= button_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
+            <li><%= button_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
+            <li><%= button_to "Quem Somos", welcome_quem_somos_path, :class => "nav_li"  %></li>
+            <li><%= button_to "Sair", destroy_user_session_path, method: :delete, :class => "nav_li"  %></li>
+          </ul>
+        </nav>
+      <% end %>
+
+      <%= yield %>
   </body>
 </html>

@@ -6,6 +6,7 @@
         <div class="notice" style="color:green"><%= flash[:notice] %></div>
     <% end %>
 
+    <!-- Passagem da visualização da dúvida por uma variável session -->
     <%= f.label session[:duvida] %>
 
     <%= f.text_area :resposta %> <br />

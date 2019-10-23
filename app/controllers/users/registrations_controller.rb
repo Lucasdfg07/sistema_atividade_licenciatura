@@ -9,30 +9,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.update_without_password(params)
   end
 
-
+  # Realizar a criação de um novo usuário
   def after_sign_up_path_for(resource)
       @users = User.create(user_params_create)
 
       signed_in_root_path(resource)
   end
 
-
+  # Realizar a atualização dos dados de um usuário já existente
   def update
     @users = current_user.update(user_params)
-    
+
     redirect_to welcome_index_path
   end
 
-
+  # Parâmetros para criação do usuário
   def user_params_create
     params.require(:user).permit(:nome, :email, :matricula, :licenciatura, :inicio_ano, :termino_ano, :password, :password_confirmation, :avatar)
   end
-  # Never trust parameters from the scary internet, only allow the white list through.
+
+  # Parâmetros para atualização do usuário
   def user_params
     params.require(:user).permit(:nome, :email, :matricula, :licenciatura, :inicio_ano, :termino_ano, :avatar)
   end
 
-  # If you have extra params to permit, append them to the sanitizer.
+  # Parâmetros de criação
    def configure_sign_up_params
      devise_parameter_sanitizer.permit(:sign_up, keys: [:nome])
      devise_parameter_sanitizer.permit(:sign_up, keys: [:matricula])
@@ -43,7 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
      devise_parameter_sanitizer.permit(:sign_up, keys: [:avatar])
    end
 
-  # If you have extra params to permit, append them to the sanitizer.
+  # Parâmetros de atualização
    def configure_account_update_params
      devise_parameter_sanitizer.permit(:account_update, keys: [:nome])
      devise_parameter_sanitizer.permit(:account_update, keys: [:matricula])

@@ -1,14 +1,24 @@
-  <div class="container">
+<button class="exibir_menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<div class="container">
   <p id="notice"><%= notice %></p>
 
   <h1>Atividades cadastradas</h1>
 
+  <!-- Se a partição do código a seguir não for relacionada à
+  pagina de atividades, então o código encapsulado é renderizado -->
   <% if policy(@activities).index? %>
 
   <div class="botao_volta">
-    <%= link_to 'Voltar', welcome_index_path, :class => "btn btn-primary"  %>
+    <%= button_to 'Voltar', welcome_index_path, :class => "btn btn-primary"  %>
   </div>
 
+  <!-- Código para busca de um aluno da página activities_path,
+  de parâmetros GET com os parâmetros de procura enviados pelo :search -->
   <%= form_tag(activities_path, method: :get, class: "form-group")  do %>
     <%= text_field_tag :search, params[:search], class: "form-control text_form"%>
     <%= submit_tag ("Procurar"), class: "form-control button_form"%>
@@ -19,6 +29,9 @@
     <b>Horas Computadas</b> e <b>Data do Evento</b>
   </small>
 
+  <!-- Início da exibição, pelo login administrativo, da
+  tabela de todas as atividades submetidas com pendência,
+  revisadas, deferidas e indeferidas -->
   <table class="table table-hover table_admin">
     <thead>
       <tr>
@@ -93,8 +106,10 @@
   <br>
 
   <% else %>
+  <!-- Caso o usuário não seja um administrador, esse encapsulamento é renderizado -->
+  <!-- Separação em 3 colunas dos botôes de cadastro, visualização da tabela de horas e a visualização das horas em PDF -->
   <div class="col-md-12" onmouseover="index_activities_slide()">
-    <%= link_to 'Voltar', welcome_index_path, :class => "btn btn-primary"  %>
+    <%= button_to 'Voltar', welcome_index_path, :class => "btn btn-primary"  %>
     <div class="col-md-3">
       <%= link_to 'Cadastrar Atividade', new_activity_path, :class => "btn btn-danger slide3"  %>
     </div>
@@ -108,6 +123,7 @@
     </div>
   </div>
 
+  <!-- Separação em 3 colunas das divs de explicação referente a cada botão. -->
   <div class="col-md-12 info_index">
     <div class="col-md-3">
       <div class="slidedown3" style="display:none;">
@@ -115,7 +131,7 @@
           <ul>
             <small style="color:#8B0000"><li>Ao cadastrar uma atividade, ela ficara com o status <i>Pendente</i>. Isso indica que já foi encaminhada
               para o(a) avaliador(a), e necessita passar pela avaliação do(a) mesmo(a).</li></small>
-            <small style="color:#8B0000"><li>Ao passar pela avaliação e o(a) avaliador(a) salvar a avaliação, a atividade assumirá o status de <i>Deferido (Atividade é contabilizada na <b>Tabela de Horas</b>)</i>,
+            <small style="color:#8B0000"><li>Ao passar pela avaliação e o(a) avaliador(a) realizar a avaliação, a atividade assumirá o status de <i>Deferido (Atividade é contabilizada na <b>Tabela de Horas</b>)</i>,
               <i>Indeferido (Atividade não é contabilizada na <b>Tabela de Horas</b>)</i>, ou <i>Revisar (Avaliador(a) coloca atividade em "espera" para posterior revisão da mesma)</i>.</li></small>
             <small style="color:#8B0000"><li>Ao ser avaliada, são preenchidos os campos 'Profissional Responsável' com o nome do(a) profissional(a) que realizou a avaliação,
               e 'Observação do profissional' com o feedback dado pelo(a) avaliador(a).</li></small>
@@ -125,8 +141,8 @@
 
     <div class="col-md-3">
       <div class="slidedown1" style="display:none;">
-        <small style="color: green">Clique em <b>Exibir horas cadastradas</b> para visualizar as todas horas contabilizadas,
-          e em que foram contabilizadas.</small>
+        <small style="color: green">Clique em <b>Exibir horas cadastradas</b> para visualizar todas as horas contabilizadas,
+          e em que grupo foram direcionadas.</small>
       </div>
     </div>
 
@@ -141,7 +157,7 @@
   <br />
   <br />
   <br />
-
+  <!-- Campo de busca por uma determinada atividade, na visualização do aluno -->
   <%= form_tag(activities_path, method: :get, class: "form-group")  do %>
     <%= text_field_tag :search, params[:search], class: "form-control text_form"%>
     <%= submit_tag ("Procurar"), class: "form-control button_form"%>
@@ -289,8 +305,28 @@
     table {
       font-size:0.56em;
     }
+    .table_admin {
+      margin-left: -20px;
+    }
     td {
       font-size:1.05em;
     }
   }
+  @media (max-width: 991.98px) {
+    .navbar {
+      display: none;
+    }
+    .exibir_menu {
+      display: block;
+    }
+    .navbar_mobile {
+      position: fixed;
+    }
+  }
 </style>
+
+<script type="text/javascript">
+  $(".exibir_menu").click(function() {
+     $(".navbar_mobile").toggle(500);
+  });
+</script>

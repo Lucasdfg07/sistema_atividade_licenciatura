@@ -1,18 +1,21 @@
 <div class="container">
-  <div class="panel panel_header">
-      <div class="panel-head">
-        <h2>Sistema de registro das Atividades Teórico-Práticas de</h2>
-        <div class="aprofundamento">
-          <h2>Aprofundamento (ATPA)</h2>
-        </div>
+  <div class="titulo">
+    <div class="fundo2">
+      <div class="titulo_sistema2">
+        <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
       </div>
+    </div>
   </div>
+
+  <br />
   <h3>Registrar-se</h3>
 
+  <!-- //Formulário de registro de um novo usuário habilitado pelo Devise -->
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
   <div class="col-md-12 nome_email">
     <div class="col-md-6">
+      <!-- //div de separação por label e input com seus respectivos valores para armazenamento no banco de dados -->
       <div class="field form-group nome_label">
         <%= f.label :nome %><br />
         <%= f.text_field :nome ,required:true%> <br />
@@ -75,6 +78,7 @@
 
     <div class="foto_perfil">
       <%= f.label 'Envie uma foto de perfil' %>
+      <!-- //Espaço para envio de uma foto para anexo de uma foto na coluna :avatar daquele usuário registrado. -->
       <div class="foto_input">
         <%= f.file_field :avatar, accept: 'image/gif, image/jpg, image/jpeg, image/png' %>
       </div>
@@ -84,6 +88,7 @@
           <%= link_to "Voltar", welcome_index_path, :class => "btn btn-primary direita"  %>
         </div>
 
+        <!-- //Botão de submit. Para salvar o arquivo no banco de dados e chamar o método para criação do registro -->
         <div class="actions form-group col-md-6 registro">
           <%= f.submit "Registrar", :class => "btn btn-warning esquerda" %>
         </div>
@@ -122,6 +127,15 @@
     }
     .foto_input {
       padding-left:38%;
+    }
+    .fundo_cortado {
+      background-color:rgb(240,240,240);
+      position: absolute;
+      height:170px;
+      width:100%;
+    }
+    .borda_cortada {
+      margin-top:15px;
     }
   </style>
 </div>

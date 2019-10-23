@@ -13,3 +13,113 @@
  *= require_tree .
  *= require_self
  */
+ .logado {
+   background: url('fundo_sistema.png') fixed no-repeat;
+   background-size:cover;
+ }
+
+.deslogado {
+ background: url('pc2.jpeg') fixed no-repeat;
+ background-size:cover;
+}
+.exibir_menu {
+  border: 2px solid black;
+  height: 40px;
+  width:40px;
+  border-radius:10px;
+  margin-left:-30px;
+  position: absolute;
+  z-index: 9999;
+  margin-top:20px;
+  position: fixed;
+  display: none;
+}
+.navbar_mobile {
+  display: none;
+}
+.exibir_menu:hover {
+  background-color: white;
+}
+.exibir_menu span {
+  display: block;
+  border: 1px solid black;
+  margin:5px 0px;
+}
+.fundo2 {
+  border: 2px solid black;
+  box-shadow: 2px -2px 15px rgba(245,245,245,0.5);
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(10,200,10,0.7);
+}
+.fundo_cortado {
+  background-color:rgb(240,240,240);
+  position: absolute;
+  height:300px;
+  width:100%;
+}
+.titulo_sistema2 {
+  padding-bottom: 10px;
+}
+.borda_cortada {
+  height:105px;
+  width:300px;
+  background-color: rgb(240,240,240);
+  position: absolute;
+  transform: rotate(60deg);
+  margin-top:5px;
+  margin-left:35px;
+  z-index: 10;
+}
+.borda_preenche {
+  height:200px;
+  width:200px;
+  background-color: rgb(240,240,240);
+  position: absolute;
+  z-index: 10;
+}
+.fundo {
+  background-color: rgba(10,180,80,0.9);
+  padding:30px;
+  margin-top:-40px;
+  margin-bottom:30px;
+  border-bottom-right-radius: 10px;
+  width: 102%;
+  position: relative;
+  padding-left:30%;
+}
+.fundo2 h2, .fundo h2 {
+  color: rgba(245,245,245,0.9);
+}
+.div_botoes h5 {
+  color: white;
+}
+@media (max-width: 991.98px) {
+  .logo_perfil, .nome, .imagem_logo {
+    display: none;
+  }
+  .login_inicial input {
+    border: none;
+  }
+  nav {
+    width:50%;
+  }
+  .logado, .deslogado {
+    background-size: 100% 100vh;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .logado, .deslogado {
+    background-size: 100vw 100vh;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .titulo_sistema h2 {
+    font-size: 1.4em;
+  }
+  .logado, .deslogado {
+    background-size: 100% 100vh;
+  }
+}

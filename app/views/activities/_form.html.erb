@@ -1,7 +1,7 @@
-
 <div class="container">
   <%= form_with(model: activity, local: true) do |form| %>
 
+    <!-- Renderização de algum erro durante o save da atividade. -->
     <% if activity.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(activity.errors.count, "error") %> atividade bloqueada de ser salva:</h2>
@@ -14,7 +14,8 @@
       </div>
     <% end %>
 
-    <% if policy(@activity).index? & current_user.role == "admin" || current_user.role !="admin" %>
+
+    <% if policy(@activity).index? && current_user.role == "admin" || current_user.role !="admin" %>
     <div class="field">
       <%= form.label :horas_computadas %>
       <%= form.number_field :hora_computada, min:0, step: :any, required:true %>

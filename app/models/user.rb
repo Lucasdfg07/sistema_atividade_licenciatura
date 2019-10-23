@@ -1,8 +1,12 @@
 class User < ApplicationRecord
+  # Atributos de validação do usuário
   validates :nome, :matricula, :licenciatura, :inicio_ano,
   :termino_ano, presence: true
 
+  # Atributo para upload de fotos
   mount_uploader :avatar, AvatarUploader
+
+  # Atributo para validação da role administrativa e de normal_user
   enum role: [:normal_user, :admin]
 
 
