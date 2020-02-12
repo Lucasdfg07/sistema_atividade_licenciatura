@@ -40,15 +40,16 @@
       <nav class="navbar_mobile fixed-left">
         <ul class="login_inicial">
         <!-- //Código da barra de navegação visualizada após o login realizado com os redirecionamentos de cada página, em forma de lista, com suas respectivas classes para o manuseio do CSS. -->
-          <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
+          <li><%= link_to "Página Inicial", welcome_index_path, :class => "nav_li"  %></li>
+          <li><%= link_to "Histórico", welcome_historico_path, :class => "nav_li" %></li>
           <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
 
           <% if current_user.role == "admin"  %>
             <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
           <% end %>
 
-          <li><%= link_to "Atividades (ATPA)", activities_path, :class => "nav_li" %></li>
-          <li><%= link_to "Estágio", estagio_welcome_index_path, :class => "nav_li" %></li>
+          <li><%= link_to "Atividades(ATPA)", activities_path, :class => "nav_li" %></li>
+          <!-- <li><%= link_to "Estágio", estagio_welcome_index_path, :class => "nav_li" %></li> -->
           <li><%= link_to "Atos Legais", welcome_documents_path, :class => "nav_li"  %></li>
           <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
           <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
@@ -64,10 +65,9 @@
       </div>
     </div>
 
-    <div class="row">
       <% if user_signed_in? %>
         <% unless request.fullpath.start_with?('/activities') || request.fullpath.start_with?('/estagio_welcome') || request.fullpath.start_with?('/relatorio_centro') || request.fullpath.start_with?('/relatorio_guarus') || request.fullpath.start_with?('/relatorio_naoformal') || request.fullpath.start_with?('/relatoutros') || request.fullpath.start_with?('/relatorio_particular') || request.fullpath.start_with?('/relatorio_publico') || current_page?('/control_users/horas_user') %>
-          <nav class="fixed-left col-md-2 ">
+          <nav class="fixed-left col-md-2">
             <div class="logo_perfil">
               <% if current_user.avatar.url.present? %>
                   <%= image_tag(current_user.avatar.url) %>
@@ -79,18 +79,19 @@
             </div>
 
             <div class="imagem_logo">
-              <%= image_tag "IFF-RJ.jpeg" %>
+              <%= image_tag "logo_dirlic.png" %>
             </div>
 
             <ul class="login_inicial">
-              <li><%= link_to "Menu Principal", welcome_index_path, :class => "nav_li"  %></li>
+              <li><%= link_to "Página Inicial", welcome_index_path, :class => "nav_li"  %></li>
+              <li><%= link_to "Histórico", welcome_historico_path, :class => "nav_li" %></li>
               <li><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav_li"  %></li>
 
               <% if current_user.role == "admin"  %>
                 <li><%= link_to "Usuários", control_users_index_path, :class => "nav_li"  %></li>
               <% end %>
-              <li><%= link_to "Atividades (ATPA)", activities_path, :class => "nav_li" %></li>
-              <li><%= link_to "Estágio", estagio_welcome_index_path, :class => "nav_li" %></li>
+              <li><%= link_to "Atividades(ATPA)", activities_path, :class => "nav_li" %></li>
+              <!-- <li><%= link_to "Estágio", estagio_welcome_index_path, :class => "nav_li" %></li> -->
               <li><%= link_to "Atos Legais", welcome_documents_path, :class => "nav_li"  %></li>
               <li><%= link_to "Eventos", evento_index_path, :class => "nav_li"  %></li>
               <li><%= link_to "Dúvidas/Contato", duvida_index_path, :class => "nav_li"  %></li>
@@ -102,7 +103,5 @@
       <% end %>
 
       <%= yield %>
-    </div>
-
   </body>
 </html>

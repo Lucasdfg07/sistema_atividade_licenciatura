@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <h1>Edição de AACC</h1>
+    <h2>Data de envio: <%= Time.now.strftime("%d/%m/%Y %H:%M") %></h2>
+
+    <p><strong>Usuário(a): </strong><%= @current_user.nome %></p>
+
+    <p><strong>Email: </strong><%= @current_user.email %></p>
+
+    <p><strong>Matrícula: </strong><%= @current_user.matricula %></p>
+
+    <p><strong>Curso: </strong><%= @current_user.licenciatura %></p>
+
+    <p><strong>Mensagem:</strong></p>
+    <p>O(a) usuário(a) <strong><%= @current_user.nome %></strong> realizou a edição da <strong>AACC</strong> de: </p>
+    <p>Título: <strong><%= @activity.titulo %></strong></p>
+    <p>Atividade: <strong><%= @activity.nome_grupo %></strong></p>
+    <p>Data do Evento: <strong><%= @activity.data_evento.strftime("%d-%m-%Y") %></strong></p>
+    <p>Status da atividade: <strong><%= @activity.status %></strong></p>
+
+  </body>
+</html>

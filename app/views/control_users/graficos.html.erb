@@ -1,0 +1,154 @@
+<div class="container col-md-9">
+    <div class="grafico">
+        <div class="mt-4 border-bottom mb-2 pb-2">
+            <h3>Gráfico de ingresso dos alunos ao sistema (por mês)</h3>
+        </div>
+
+            <% series = [
+                {name: "Ciências da Natureza", data: @ciencias},
+                {name: "Educação Física", data: @educacao},
+                {name: "Geografia", data: @geografia},
+                {name: "Letras: Português e Literaturas", data: @letras},
+                {name: "Matemática", data: @matematica},
+                {name: "Teatro", data: @teatro}
+            ] %>
+            ​
+            <% options = {
+                title: 'Inscrição de Usuários',
+                subtitle: 'Agrupados por semana',
+                xtitle: 'Semana',
+                ytitle: 'Quantidade',
+                stacked: true,
+                xaxis: {
+                    type: 'datetime'
+                }
+            } %>  
+            ​
+            <%= combo_charts({**options, theme: 'palette1', stacked: false, data_labels: false, defaultLocale: 'pt-br'}) do %>
+                <% column_chart(series) %>
+            <% end %>
+        </div>
+
+
+        <div class="carga_horaria panel p-4 mb-4">
+            <div class="title border-bottom mb-2 mt-4 pb-2 text-center panel-head">
+                <h3>Quantidade de alunos que já completaram 200 horas</h3>
+            </div>
+
+            <div class="conteudo panel-body">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Quantidade</th>
+                            <th>Porcentagem (%)</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th>Educação Física</th>
+                            <td><%= @ciencia_quant %></td>
+                            <td><%= '%.2f' % ((@ciencia_quant.to_f / @users.all.count.to_f) * 100) %>%</td>
+                        </tr>
+
+                        <tr>
+                            <th>Ciências da Natureza</th>
+                            <td><%= @educacao_quant %></td>
+                            <td><%= '%.2f' % ((@educacao_quant.to_f / @users.all.count.to_f) * 100) %>%</td>
+                        </tr>
+
+                        <tr>
+                            <th>Geografia</th>
+                            <td><%= @geografia_quant %></td>
+                            <td><%= '%.2f' % ((@geografia_quant.to_f / @users.all.count.to_f) * 100) %>%</td>
+                        </tr>
+
+                        <tr>
+                            <th>Letras: Português e Literaturas</th>
+                            <td><%= @letras_quant %></td>
+                            <td><%= '%.2f' % ((@letras_quant.to_f / @users.all.count.to_f) * 100) %>%</td>
+                        </tr>
+
+                        <tr>
+                            <th>Matemática</th>
+                            <td><%= @matematica_quant %></td>
+                            <td><%= '%.2f' % ((@matematica_quant.to_f / @users.all.count.to_f) * 100) %>%</td>
+                        </tr>
+
+                        <tr>
+                            <th>Teatro</th>
+                            <td><%= @teatro_quant %></td>
+                            <td><%= '%.2f' % ((@teatro_quant.to_f / @users.all.count.to_f) * 100) %>%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="carga_horaria panel p-4">
+            <div class="title border-bottom mb-2 pb-2 text-center panel-head">
+                <h3>Quantidade de alunos que <b>não</b> têm horas aprovadas no sistema</h3>
+            </div>
+
+        <div class="conteudo panel-body">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Quantidade</th>
+                        <th>Porcentagem (%)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <th>Educação Física</th>
+                        <td><%= @aluno_educacao_sem_atividades %></td>
+                        <td><%= '%.2f' % ((@aluno_educacao_sem_atividades.to_f / @users.all.count.to_f) * 100) %>%</td>
+                    </tr>
+
+                    <tr>
+                        <th>Ciências da Natureza</th>
+                        <td><%= @aluno_ciencias_sem_atividades %></td>
+                        <td><%= '%.2f' % ((@aluno_ciencias_sem_atividades.to_f / @users.all.count.to_f) * 100) %>%</td>
+                    </tr>
+
+                    <tr>
+                        <th>Geografia</th>
+                        <td><%= @aluno_geografia_sem_atividades %></td>
+                        <td><%= '%.2f' % ((@aluno_geografia_sem_atividades.to_f / @users.all.count.to_f) * 100) %>%</td>
+                    </tr>
+
+                    <tr>
+                        <th>Letras: Português e Literaturas</th>
+                        <td><%= @aluno_letras_sem_atividades %></td>
+                        <td><%= '%.2f' % ((@aluno_letras_sem_atividades.to_f / @users.all.count.to_f) * 100) %>%</td>
+                    </tr>
+
+                    <tr>
+                        <th>Matemática</th>
+                        <td><%= @aluno_matematica_sem_atividades %></td>
+                        <td><%= '%.2f' % ((@aluno_matematica_sem_atividades.to_f / @users.all.count.to_f) * 100) %>%</td>
+                    </tr>
+
+                    <tr>
+                        <th>Teatro</th>
+                        <td><%= @aluno_teatro_sem_atividades %></td>
+                        <td><%= '%.2f' % ((@aluno_teatro_sem_atividades.to_f / @users.all.count.to_f) * 100) %>%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .panel {
+        box-shadow: -2px 2px 15px rgba(10,10,10,0.3);
+        border-radius: 10px;
+    }
+    .panel b {
+        color: red;
+    }
+</style>

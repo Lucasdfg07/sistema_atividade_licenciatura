@@ -27,6 +27,8 @@ class EstagioWelcomeController < ApplicationController
     def update
       @id_user = session[:id_user]
 
+      ContactMailer.confirmacao_impressao(current_user).deliver
+
       User.where(id: @id_user).update(situacao_params)
 
       redirect_to estagio_welcome_index_path, notice: 'Usuário atualizado com sucesso!'

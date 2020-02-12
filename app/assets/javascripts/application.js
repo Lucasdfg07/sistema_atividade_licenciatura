@@ -12,6 +12,7 @@
 //
 //= require jquery3
 //= require popper
+//= require 'apexcharts'
 //= require bootstrap
 
 $(document).ready(function(){
@@ -30,6 +31,11 @@ $(document).ready(function(){
    $(".exibir_menu").click(function() {
       $(".navbar_mobile").toggle(500);
    });
+
+   $(".edit_form").click(function() {
+      $(".editar_atividade").show(800);
+      $(".edit_form").hide();
+   });
 });
 
 $(document).ready(function(){
@@ -40,42 +46,12 @@ $('#tipo').hide();
   ValidaTipo();
 });
 
-function index_activities_slide() {
-  $(".slide1").mouseenter(function(){
-    $(".slidedown1").slideDown();
-  });
-
-  $(".slide1").mouseleave(function(){
-    $(".slidedown1").slideUp();
-  });
-
-  $(".slide2").mouseenter(function(){
-    $(".slidedown2").slideDown();
-  });
-
-  $(".slide2").mouseleave(function(){
-    $(".slidedown2").slideUp();
-  });
-
-  $(".slide3").mouseenter(function(){
-    $(".slidedown3").slideDown();
-  });
-
-  $(".slide3").mouseleave(function(){
-    $(".slidedown3").slideUp();
-  });
-}
-
 function ValidaTipo() {
     if($('#grupo').val() == 0 || $('#grupo').val() == 10) {
       $('#tipo').show();
     } else {
       $('#tipo').hide();
     }
-}
-
-
-function div_index_activities() {
 }
 
 $(document).ready(function() {

@@ -6,16 +6,35 @@
   <% end %>
   <div class="row">
     <div class="col-md-4">
-    <%= render 'form', activity: @activity %>
-    <% if(current_user.role == "admin") %>
-        <%= link_to 'Voltar', activities_path, :class => "btn btn-primary"  %>
-    <% end %>
+      <%= render 'form', activity: @activity %>
+      <% if(current_user.role == "admin") %>
+          <%= link_to 'Voltar', activities_path, :class => "btn btn-primary"  %>
+      <% end %>
     </div>
 
     <% if current_user.role == "admin" %>
-      <div class="col-md-7 tabela_div">
+      <div class="col-md-8 tabela_div">
         <%= render 'show', activity: @activity %>
       </div>
+
+      <table border="1" width="60%" class="table table-hover">
+        <tr>
+          <th></th>
+          <th>Status</th>
+          <th>Data de Avaliação</th>
+        </tr>
+
+        <% @avaliacoes.each do |avaliacoes| %>
+          <% if @activity.id == avaliacoes.id_activity %>
+            <div class="hidden"><%= @cont += 1 %></div>
+            <tr>
+              <td><%= @cont %></td>
+              <td><%= avaliacoes.status %></td>
+              <td><%= avaliacoes.created_at.strftime("%d/%m/%Y") %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
     <% end %>
   </div>
 
@@ -25,12 +44,8 @@
       margin-top:5px;
       margin-left:15px;
     }
-    table {
-      width:700px!important;
-    }
     .tabela_div {
       margin-top:-75px;
-      margin-left: 70px;
     }
     @media (max-width: 767.98px) {
       .tabela_div {

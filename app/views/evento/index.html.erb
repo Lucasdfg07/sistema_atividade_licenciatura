@@ -37,11 +37,15 @@
     <% end %>
 
       <style type="text/css">
-        .panel {
+        .background-quadros {
+          padding-bottom: 300px;
+        }
+        .background-quadros > .panel {
           box-shadow: -3px 3px 15px rgba(200,200,200,0.3);
           border-radius:20px;
+          padding:10px;
         }
-        .panel h2 {
+        .background-quadros > .panel h2 {
           text-align:center;
           padding-bottom:5px;
           color: rgba(120,120,120,0.9);
@@ -54,14 +58,17 @@
         .noticia_foto {
           margin-top:10px;
         }
-        .panel-body img {
+        .background-quadros > .panel-body img {
           height:250px;
           width:550px;
           border-radius:10px;
           box-shadow:-3px -3px 33px rgba(20,20,20,0.3);
         }
-        .panel-body {
+        .background-quadros > .panel-body {
           text-align:center;
+        }
+        .panel-body img {
+          width:80%;
         }
         footer {
           border: 2px solid black;

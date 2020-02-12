@@ -1,0 +1,97 @@
+<div class="container col-md-9">
+  <p id="notice"><%= notice %></p>
+  <h1>Usuários</h1>
+
+  <%= form_tag(control_users_cursos_path, {method: :get, class: "form-group"})  do %>
+    <%= hidden_field_tag :curso , params[:curso] %>
+    <div class="row">
+      <%= text_field_tag :search, params[:search], class: "form-control text_form col-md-10", placeholder: 'Pesquise por um aluno!' %>
+      <%= submit_tag ("Procurar"), class: "form-control button_form col-md-2"%>
+    </div>
+  <% end %>
+  
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><%= link_to "Ciências da Natureza", control_users_cursos_path(curso: "Ciências da Natureza"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Educação Física", control_users_cursos_path(curso: "Educação Física"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Geografia", control_users_cursos_path(curso: "Geografia"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Letras: Português e Literaturas", control_users_cursos_path(curso: "Letras: Português e Literaturas"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Matemática", control_users_cursos_path(curso: "Matemática"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Teatro", control_users_cursos_path(curso: "Teatro"), class: 'nav-link' %></li>
+  </ul>
+  
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><%= link_to "1.º", control_users_cursos_path(curso: params[:curso], periodo: "1.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "2.º", control_users_cursos_path(curso: params[:curso],periodo: "2.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "3.º", control_users_cursos_path(curso: params[:curso],periodo: "3.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "4.º", control_users_cursos_path(curso: params[:curso],periodo: "4.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "5.º", control_users_cursos_path(curso: params[:curso],periodo: "5.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "6.º", control_users_cursos_path(curso: params[:curso],periodo: "6.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "7.º", control_users_cursos_path(curso: params[:curso],periodo: "7.º"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "8.º", control_users_cursos_path(curso: params[:curso],periodo: "8.º"), class: 'nav-link' %></li>
+  </ul> 
+
+  <%= form_with model: @user do |form| %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Perfil</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Período</th>
+            <th scope="col">Matricula</th>
+            <th scope="col">Role</th>
+            <th scope="col">Licenciatura</th>
+            <th scope="col">Tabela de Horas</th>
+            <th scope="col">Relatório de Horas (PDF)</th>
+            <th scope="col">Modificação de Horas</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <% @users.each do |user| %>
+                <% if user.licenciatura == params[:curso] %> 
+                  <% if params[:periodo].present? %>
+                    <% if user.periodo == params[:periodo] %>
+                      <div class="hidden"><%= @cont += 1 %></div>
+                      <tr>
+                          <td><b><%= @cont %></b></td>
+                          <td>
+                          <% if user.avatar.url.present? %>
+                              <%= image_tag(user.avatar.url) %>
+                          <% end %>
+                          </td>
+                          <td><%= user.nome %></td>
+                          <td><%= user.periodo %></td>
+                          <td><%= user.matricula %></td>
+                          <td><%= user.role %></td>
+                          <td><%= user.licenciatura %></td>
+                          <td><%= link_to 'Tabela', control_users_horas_user_path(:nome => user.nome), target: "_blank", :class => "btn btn-info" %></td>
+                          <td><%= link_to 'Relatório', activities_path(user, user.activities, :nome => user.nome, :format => :pdf), :class => "btn btn-dark" %></td>
+                          <td><%= link_to 'Modificar Horas', new_activity_path(:id => user.id, :nome => user.nome), :class => "btn btn-success"  %></td>
+                      </tr>
+                    <% end %>
+                  <% else %>
+                    <div class="hidden"><%= @cont += 1 %></div>
+                    <tr>
+                        <td><b><%= @cont %></b></td>
+                        <td>
+                        <% if user.avatar.url.present? %>
+                            <%= image_tag(user.avatar.url) %>
+                        <% end %>
+                        </td>
+                        <td><%= user.nome %></td>
+                        <td><%= user.periodo %></td>
+                        <td><%= user.matricula %></td>
+                        <td><%= user.role %></td>
+                        <td><%= user.licenciatura %></td>
+                        <td><%= link_to 'Tabela', control_users_horas_user_path(:nome => user.nome), target: "_blank", :class => "btn btn-info" %></td>
+                        <td><%= link_to 'Relatório', activities_path(user, user.activities, :nome => user.nome, :format => :pdf), :class => "btn btn-dark" %></td>
+                        <td><%= link_to 'Modificar Horas', new_activity_path(:id => user.id, :nome => user.nome), :class => "btn btn-success"  %></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+            <% end %>
+        </tbody>
+      </table>
+  <% end %>
+</div>

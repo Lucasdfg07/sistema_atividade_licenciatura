@@ -94,27 +94,3 @@ nav ul {
   background-position: center;
   min-height: 100vh;
 }
-
-@media (max-width: 991.98px) {
-  table {
-    margin-left:-10%;
-  }
-  table thead {
-    display: none;
-  }
-  table tr {
-    border-bottom: 1px solid black;
-  }
-  table td {
-    border: 0;
-  }
-  table td {
-    display: block;
-  }
-  td p {
-    width: 100%!important;
-    overflow:scroll!important;
-    text-overflow:clip!important;
-    text-align:center!important;
-  }
-}

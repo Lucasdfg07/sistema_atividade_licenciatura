@@ -12,12 +12,19 @@ gem 'prawn-rails'
 gem 'pundit', '~> 1.1'
 gem 'devise', '~> 4.5'
 gem 'cancancan', '~> 2.0'
-gem 'rails_admin', '~> 1.4', '>= 1.4.2'
+
+gem 'rails_admin', github: 'sferik/rails_admin'
 
 gem "paperclip", "~> 6.0.0"
 gem 'paper_trail', '~> 10.0', '>= 10.0.1'
 
 gem 'bootstrap', '~> 4.3.1'
+# Guardando a Key da API
+gem 'dotenv'
+
+# Gráficos
+gem 'apexcharts'
+gem 'groupdate'
 
 gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -31,38 +31,28 @@
     </div>
 
     <div class="field grupo">
-      <%= form.label :grupo %>
-      <%= form.select :grupo, grouped_options_for_select([['Grupo 1, ATIVIDADES
-        DE EXTENSÃO (80H)',options_for_select([["Participação como ouvinte em Palestras, Seminários,
-        Congressos, Conferências, Simpósios, Fóruns, Encontros,
-        Mesas Redondas e similares (30H)","0"],["Participação no desenvolvimento de projetos de extensão sob
-        orientação de professor,na área de formação (20H)","1"],["Visitas orientadas a exposições, museus, teatros, patrimônio
-        artístico ou cultural (20H)","2"],["Representação em Órgãos Colegiados e/ou Comissões do
-        IFFluminense campus Campos Centro (10H)","3"],["Participação em atividade de extensão, na área de formação, nas
-        modalidades presencial e/ou semipresencial (50H)","4"],["Atuação em função de bolsista no IFFluminense, em no mínimo
-        02 (dois) períodos letivos (20h)","5"],["Participação em curso de extensão, na área de formação, na
-        modalidade online (20H)","6"],["Participação em Atividade de Monitoria, na área de formação,
-        no 2º segmento do Ensino Fundamental, em Cursos de Nível
-        Médio e/ou em Curso Superior (20h)","7"]],@activity.grupo)],['Grupo 2, EVENTOS ACADÊMICO - CIENTÍFICO - CULTURAIS (80H)',options_for_select([["Participação como ouvinte na apresentação oral de Qualificação do
-        Projeto e/ou Monografia(Trabalho de Conclusão, Dissertação e Tese),
-        na área de formação e/ou em áreas afins à formação (20H)","8"],["Participação como ouvinte na apresentação oral de Monografias
-        (Trabalho Conclusão de Curso, Dissertação e Tese), na área de
-        formação e/ou em áreas afins à formação (30H)","9"],["Participação como ouvinte em Palestras, Seminários, Congressos,
-        Conferências, Simpósios, Fóruns, Encontros, Mesas Redondas,
-        minicursos, oficinas e similares (50h)","10"],["Participação como ouvinte em atividades artísticas e culturais
-        sob a supervisão de professor e/ou de profissional do
-        IFFluminense (35H)","11"]]),@activity.grupo],['Grupo 3, PRODUÇÃO ACADÊMICO - CIENTÍFICO - CULTURAL e PESQUISA INSTITUCIONAL
-        VINCULADA A AGÊNCIA DE FOMENTO (40H)',options_for_select([["Apresentação de trabalhos acadêmicos, científicos ou culturais
-        em instituições de âmbito local, regional, nacional e/ou
-        internacional (40H, 5H por trabalho apresentado)","12"],["Publicação em Periódicos / em Anais (Resumo e/ou Artigo
-        Completo) (40H, 10H por trabalho publicado)","13"],["Publicação em Livros (40H, 10H por trabalho publicado)","14"],["Participação na organização e coordenação de eventos
-        acadêmico-científico-culturais internos ou externos ao
-        IFFluminense (30H, 5H para cada dia de participação )","15"],["Participação no desenvolvimento como bolsista ou
-        voluntário, em projetos de pesquisa, por semestre letivo (10H)","16"],["Participação em Grupo de Estudo Temático soborientação de
-        professor, por semestre letivo, na área de formação e/ou em
-        áreas afins à formação (20H)","17"],["Apresentação de trabalhos de pesquisa institucional em eventos
-        científicos internos ou externos (40H, 5H pora cada apresentação)","18"],["Outros","22"]],@activity.grupo)]]),
-        {}, :id => "grupo" %>
+      <%= form.label :atividade %>
+      <%= form.label :atividade %>
+      <%= form.select :grupo, grouped_options = [
+      ['Participação como ouvinte em Palestras, Seminários, Congressos, Conferências,
+      Simpósios, Fóruns, Encontros, Mesas Redondas, Minicursos, Oficinas e similares', '0'],
+      ['Participação no desenvolvimento de projetos de extensão sob orientação de professor, na área de formação','1'],
+      ['Participação no desenvolvimento de projeto de pesquisa sob orientação de professor, na área de formação','2'],
+      ['Visitas orientadas a exposições, museus, teatros, patrimônio artístico ou cultural','3'],
+      ['Participação em atividades artísticas e culturais sob a supervisão de professor e/ou de profissional do IFFluminense','4'],
+      ['Representação em Órgãos Colegiados e/ou Comissões do IFFluminense campus Campos Centro','5'],
+      ['Participação em atividade de extensão, na área de formação, nas modalidades presencial e/ou semipresencial','6'],
+      ['Atuação em função de bolsista ou voluntário no IFFluminense, em, no mínimo, 02 (dois) períodos letivos','7'],
+      ['Participação em curso de extensão, na área de formação, na modalidade online ','8'],
+      ['Participação em Atividade de Monitoria, na área de formação, no 2.º segmento do Ensino Fundamental, em Cursos de Nível Médio e/ou em Curso Superior','9'],
+      ['Participação como ouvinte na apresentação oral de Qualificação do Projeto e/ou Monografia(Trabalho de Conclusão, Dissertação e Tese), na área de formação e/ou em áreas afins à formação','10'],
+      ['Participação como ouvinte na apresentação oral de Monografias (Trabalho Conclusão de Curso, Dissertação e Tese), na área de formação e/ou em áreas afins à formação','11'],
+      ['Apresentação de trabalhos acadêmicos, científicos ou culturais em instituições de âmbito local, regional, nacional e/ou internacional','12'],
+      ['Publicação em periódicos / em Anais (Resumo e/ou Artigo Completo)','13'],
+      ['Publicação em Livros','14'],
+      ['Participação na organização e coordenação de eventos acadêmico-científico-culturais internos ou externos ao IFFluminense','15'],
+      ['Participação em Grupo de Estudo Temático sob orientação de professor, em semestre letivo, na área de formação e/ou em áreas afins à formação','16'],
+      ['Apresentação de trabalhos de pesquisa institucional em eventos científicos internos ou externos','17']], :id => "grupo", class: 'dropdown-select'  %>
     </div>
 
 

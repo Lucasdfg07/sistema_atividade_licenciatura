@@ -8,14 +8,19 @@ Rails.application.routes.draw do
   get 'activities/deferidos'
   get 'activities/indeferidos'
   get 'activities/pendentes'
+  get 'activities/atividades_geral'
   get 'activities/revisar'
+  get 'activities/export'
 
   get 'control_users/horas_user'
   get 'control_users/index'
   get 'control_users/horas_user'
+  get 'control_users/cursos'
+  get 'control_users/graficos'
 
   get 'welcome/index'
   get 'welcome/documents'
+  get 'welcome/historico'
 
   get 'evento/index'
   post 'evento/create'
@@ -28,6 +33,8 @@ Rails.application.routes.draw do
 
   get 'welcome/duvidas'
   get 'welcome/quem_somos'
+
+  post 'welcome/atualizar_prazo'
 
   # Routes Sistema de Estágio
   get 'estagio_welcome/index'

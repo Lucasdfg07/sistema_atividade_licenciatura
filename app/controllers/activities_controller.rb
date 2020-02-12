@@ -7,25 +7,33 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    if current_user.role == "admin"
-        @activities = Activity.order(status: :DESC).where("titulo LIKE :search OR status LIKE :search OR relatorio LIKE :search OR edited_by LIKE :search OR nome_grupo LIKE :search OR local_realizacao_atividade LIKE :search OR relatorio LIKE :search OR status LIKE :search OR feedback LIKE :search OR edited_by LIKE :search OR nome_usuario LIKE :search OR nome_do_evento LIKE :search", search: "%#{params[:search]}%")
-        @user = User.order(status: :DESC).where("nome LIKE :search", search: "%#{params[:search]}%")
-        if @activities.exists? || @user.exists?
-        else
-          @activities = Activity.order(status: :DESC).where("titulo LIKE :search OR status LIKE :search OR relatorio LIKE :search OR edited_by LIKE :search OR nome_grupo LIKE :search OR local_realizacao_atividade LIKE :search OR relatorio LIKE :search OR status LIKE :search OR feedback LIKE :search OR edited_by LIKE :search OR nome_usuario LIKE :search OR nome_do_evento LIKE :search", search: "%#{params[:search]}%".titleize)
-          @user = User.order(status: :DESC).where("nome LIKE :search", search: "%#{params[:search]}%".titleize)
-          if @activities.exists? || @user.exists?
-          else
-            @activities = Activity.order(status: :DESC).where("titulo LIKE :search OR status LIKE :search OR relatorio LIKE :search OR edited_by LIKE :search OR nome_grupo LIKE :search OR local_realizacao_atividade LIKE :search OR relatorio LIKE :search OR status LIKE :search OR feedback LIKE :search OR edited_by LIKE :search OR nome_usuario LIKE :search OR nome_do_evento LIKE :search", search: "%#{params[:search]}%".titleize)
-            @user = User.order(status: :DESC).where("nome LIKE :search", search: "%#{params[:search]}%".titleize)
-          end
-        end
+    @data_prazo = PrazoAtpa.last.prazo_final.strftime("%d/%m/%Y")
+    @data = PrazoAtpa.last.prazo_final.to_datetime
 
-     else
-      @usuario = current_user.nome
-      @activities = current_user.activities.order(status: :DESC).where("titulo LIKE :search OR status LIKE :search OR relatorio LIKE :search OR edited_by LIKE :search OR nome_grupo LIKE :search OR local_realizacao_atividade LIKE :search OR relatorio LIKE :search OR status LIKE :search OR feedback LIKE :search OR edited_by LIKE :search OR nome_do_evento LIKE :search", search: "%#{params[:search]}%")
-      @atividades_cadastradas = Activity.where("nome_usuario = '"+ @usuario +"'").count
+    if params[:page].present? && params[:page] > "1"
+      @cont = (params[:page].to_i - 1) * 400
+    else
+      @cont = 0
     end
+
+    # Função para pesquisa do aluno
+    if params[:search].present?
+      pesquisa_atividades
+    elsif params[:search_periodo].present? && params[:search_curso].blank?
+      @activities_geral = Activity.joins(:user).merge(User.where("periodo LIKE :search_periodo", search_periodo: "%#{params[:search_periodo]}%")).paginate(page: params[:page], per_page: 400)
+    elsif params[:search_curso].present? && params[:search_periodo].blank?
+      @activities_geral = Activity.joins(:user).merge(User.where("licenciatura LIKE :search_curso", search_curso: "%#{params[:search_curso]}%")).paginate(page: params[:page], per_page: 400)
+    elsif params[:search_curso].present? && params[:search_periodo].present?
+      @activities_geral = Activity.joins(:user).merge(User.where("licenciatura LIKE :search_curso AND periodo LIKE :search_periodo", search_curso: "%#{params[:search_curso]}%", search_periodo: "%#{params[:search_periodo]}%")).paginate(page: params[:page], per_page: 400)
+    else
+      @activities = Activity.order(status: :DESC)
+      @activities_geral = Activity.order(status: :DESC).paginate(page: params[:page], per_page: 400)
+    end
+
+    @activities_aluno = Activity.order(status: :DESC)
+    @activities_pendente = Activity.order(status: :DESC).paginate(page: params[:page], per_page: 400)
+    
+    @activities_deferido = Activity.order(status: :DESC).paginate(page: params[:page], per_page: 400)
 
     respond_to do |format|
      format.html
@@ -39,29 +47,29 @@ class ActivitiesController < ApplicationController
        send_data pdf.render, filename: 'relatorio.pdf', type: 'application/pdf', disposition: 'inline'
      end
     end
+  end
 
+  def pesquisa_atividades
+    if current_user.role == "admin"
+      @activities_geral = Activity.where("lower(nome_usuario) LIKE :search", search: "%#{params[:search].downcase}%").paginate(page: params[:page], per_page: 400)
+    else
+      @usuario = current_user.nome
+      @activities = current_user.activities.order(status: :DESC).where("lower(titulo) LIKE :search OR lower(status) LIKE :search OR lower(relatorio) LIKE :search OR lower(edited_by) LIKE :search OR lower(nome_grupo) LIKE :search OR lower(local_realizacao_atividade) LIKE :search OR lower(relatorio) LIKE :search OR lower(status) LIKE :search OR lower(feedback) LIKE :search OR lower(edited_by) LIKE :search OR lower(nome_do_evento) LIKE :search", search: "%#{params[:search].downcase}%")
+      @atividades_cadastradas = Activity.where("nome_usuario = '"+ @usuario +"'").count
+    end
+  end
+
+  def atualizar_prazo
+    @prazo = PrazoAtpa.create(prazo_params)
+    @prazo.update(admin_responsavel: current_user.nome)
+
+    redirect_to activities_path , notice: 'Prazo salvo com sucesso!'
   end
 
   # GET /activities/1
   # GET /activities/1.json
   def show
 
-  end
-
-  def deferidos
-    @activity = Activity.all
-  end
-
-  def indeferidos
-    @activity = Activity.all
-  end
-
-  def pendentes
-    @activity = Activity.all
-  end
-
-  def revisar
-    @activity = Activity.all
   end
 
   # GET /activities/new
@@ -79,6 +87,9 @@ class ActivitiesController < ApplicationController
   # GET /activities/1/edit
   def edit
     @activity_grupo_0 = [ "Palestras", "Seminários", "Congressos", "Simpósios", "Fóruns", "Encontros", "Mesas Redondas e Similares"]
+    
+    @cont = 0
+    @avaliacoes = RegistroAvaliacao.order(created_at: :DESC)
   end
 
   # POST /activities
@@ -89,110 +100,12 @@ class ActivitiesController < ApplicationController
     @activity.nome_usuario = @activity.user.nome
     @activity.status = "Pendente"
     @activity_grupo_0 = Activity.all
-    if @activity.grupo == 0
-      @activity.nome_grupo = '1.1 - Participação como ouvinte em Palestras, Seminários,
-      Congressos, Conferências, Simpósios, Fóruns, Encontros,
-      Mesas Redondas e similares (30H)'
-    end
 
-    if @activity.grupo == 1
-      @activity.nome_grupo = '1.2 - Participação no desenvolvimento de projetos de extensão sob
-      orientação de professor,na área de formação (20H)'
-    end
 
-    if @activity.grupo == 2
-      @activity.nome_grupo = '1.3 - Visitas orientadas a exposições, museus, teatros, patrimônio
-      artístico ou cultural (20H)'
-    end
+    @grupo_database = Grupo.find_by(grupo: @activity.grupo)
 
-    if @activity.grupo == 3
-      @activity.nome_grupo = '1.4 - Representação em Órgãos Colegiados e/ou Comissões do
-      IFFluminense campus Campos Centro (10H)'
-    end
-
-    if @activity.grupo == 4
-      @activity.nome_grupo = '1.5 - Participação em atividade de extensão, na área de formação, nas
-      modalidades presencial e/ou semipresencial (50H)'
-    end
-
-    if @activity.grupo == 5
-      @activity.nome_grupo = '1.6 - Atuação em função de bolsista no IFFluminense, em no mínimo
-      02 (dois) períodos letivos (20h)'
-    end
-
-    if @activity.grupo == 6
-      @activity.nome_grupo = '1.7 - Participação em curso de extensão, na área de formação, na
-      modalidade online (20H)'
-    end
-
-    if @activity.grupo == 7
-      @activity.nome_grupo = '1.8 - Participação em Atividade de Monitoria, na área de formação,
-      no 2º segmento do Ensino Fundamental, em Cursos de Nível
-      Médio e/ou em Curso Superior (20h)'
-    end
-
-    if @activity.grupo == 8
-      @activity.nome_grupo = '2.1 - Participação como ouvinte na apresentação oral de Defesa do
-      Projeto de Qualificação de Trabalho de (Conclusão Dissertação
-      e Tese), na área de formação e/ou em áreas afins à formação (20H)'
-    end
-
-    if @activity.grupo == 9
-      @activity.nome_grupo = '2.2 - Participação como ouvinte na apresentação oral de Monografias
-      (Trabalho Conclusão de Curso, Dissertação e Tese), na área de
-      formação e/ou em áreas afins à formação (30H)'
-    end
-
-    if @activity.grupo == 10
-      @activity.nome_grupo = '2.3 - Participação como ouvinte em Palestras, Seminários,Congressos,
-      Conferências, Simpósios, Fóruns, Encontros, Mesas Redondas,
-      minicursos, oficinas e similares (50h)'
-    end
-
-    if @activity.grupo == 11
-      @activity.nome_grupo = '2.4 - Participação como ouvinte em atividades artísticas e culturais
-      sob a supervisão de professor e/ou de profissional do
-      IFFluminense (35H)'
-    end
-
-    if @activity.grupo == 12
-      @activity.nome_grupo = '3.1 - Apresentação de trabalhos acadêmicos, científicos ou culturais
-      em instituições de âmbito local, regional, nacional e/ou
-      internacional (40H, 5H por trabalho apresentado)'
-    end
-
-    if @activity.grupo == 13
-      @activity.nome_grupo = '3.2 - Publicação em periódicos (40H, 10H por trabalho publicado)","Publicação em Livros (40H, 10H por trabalho publicado)'
-    end
-
-    if @activity.grupo == 14
-      @activity.nome_grupo = '3.3 - Publicação em Livros (40H, 10H por trabalho publicado)'
-    end
-
-    if @activity.grupo == 15
-      @activity.nome_grupo = '3.4 - Participação na organização e coordenação de eventos
-      acadêmico-científico-culturais internos ou externos ao
-      IFFluminense (30H, 5H para cada dia de participação)'
-    end
-
-    if @activity.grupo == 16
-      @activity.nome_grupo = '3.5 - Participação no desenvolvimento de projetos de pesquisa, por
-      semestre letivo (10H)'
-    end
-
-    if @activity.grupo == 17
-      @activity.nome_grupo = '3.6 - Participação em Grupo de Estudo Temático soborientação de
-      professor, por semestre letivo, na área de formação e/ou em
-      áreas afins à formação (5H)'
-    end
-
-    if @activity.grupo == 18
-      @activity.nome_grupo = '3.7 - Apresentação de trabalhos de pesquisa institucional em eventos
-      científicos internos ou externos (40H, 5H pora cada apresentação)'
-    end
-
-    if @activity.grupo == 22
-      @activity.nome_grupo = 'Outros'
+    if @activity.grupo == @grupo_database.grupo
+      @activity.nome_grupo = @grupo_database.nome_grupo
     end
 
     if current_user.role == "admin"
@@ -213,7 +126,7 @@ class ActivitiesController < ApplicationController
     end
 
     if current_user.role != "admin"
-      AaccMailer.envio_atividade(current_user).deliver
+      AaccMailer.envio_atividade(current_user, @activity).deliver
     end
   end
 
@@ -226,6 +139,28 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity.update(activity_params)
+
+        # Achar o grupo da tabela Grupo
+        @grupo = Grupo.find_by(grupo: @activity.grupo)
+
+        # Atualizar o nome_grupo da tabela Activity pelo dado resgatado da tabela Grupo
+        @atualizar_nome_grupo = @activity.update(nome_grupo: @grupo.nome_grupo)
+
+        # Encontrar usuário para mandar o email de aviso de avaliação da AACC para o mesmo.
+        @aluno_da_atividade = User.find_by(nome: @activity.nome_usuario)
+
+        if current_user.role != "admin"
+          AaccMailer.editou_atividade(current_user, @activity).deliver
+        else
+          @id = @aluno_da_atividade.id
+          @nome = @activity.nome_usuario
+          @status = @activity.status
+          @id_activity = @activity.id
+
+          @registro = RegistroAvaliacao.create(aluno_id: @id, nome_aluno: @nome, status: @status, avaliador: current_user.nome, id_activity: @id_activity)
+          AaccMailer.envio_aluno(current_user, @activity, @aluno_da_atividade).deliver
+        end
+
         format.html { redirect_to @activity, notice: 'Atividade atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @activity }
       else
@@ -246,12 +181,12 @@ class ActivitiesController < ApplicationController
   end
 
   def export
-    pdf = GeneratePdf::activity(current_user, current_user.activities)
+    pdf = GeneratePdf::activity(user, user.activities)
     send_data pdf.render,
       filename: "relatorioativ",
       type: 'application/pdf',
       disposition: 'inline'
-  end
+    end
 
   def pertence
     if ((current_user.role != "admin")&&(current_user.id != @activity.user_id))
@@ -271,8 +206,10 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:edited_by,:grupo, :tipo, :status ,:feedback, :data_evento, :titulo, :local_realizacao_atividade, :nome_do_evento, :relatorio, :user_id, :hora_computada, {documents: []})
+      params.require(:activity).permit(:edited_by, :grupo, :tipo, :status ,:feedback, :data_evento, :titulo, :local_realizacao_atividade, :nome_do_evento, :relatorio, :user_id, :hora_computada, {documents: []})
     end
 
-
+    def prazo_params
+      params.permit(:prazo_final)
+    end
 end

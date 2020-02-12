@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-  validates :nome, :matricula, :licenciatura, :periodo, :inicio_ano,
+  validates :nome, :licenciatura, :periodo, :inicio_ano,
   :termino_ano, presence: true
+
+  validates_uniqueness_of :matricula
 
   validates :pdf_centro, :pdf_guarus, :pdf_outros, :status_impressao, presence: false
 
@@ -27,5 +29,4 @@ class User < ApplicationRecord
   	self.cargahoraria = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     self.cargahoraria_total = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   end
-
 end

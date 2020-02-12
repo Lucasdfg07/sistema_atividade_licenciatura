@@ -1,10 +1,10 @@
-<div class="container col-md-9">
-  <div class="principal">
+<div class="text-center col-md-9">
+  <hr />
   <h3>Editando Perfil de <%= @user.nome %></h3>
+  <hr />
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
-
 
   <div id="form_principal">
     <div class="row">
@@ -20,17 +20,17 @@
           </div>
 
           <div class="field">
-            <%= f.label :matricula %><br />
+            <%= f.label :matrícula %><br />
             <%= f.text_field :matricula, require:true %>
           </div>
       </div>
 
       <div class="col-md-6">
           <div class="field">
-            <%= f.label :licenciatura_e_periodo %> <br />
-            <%= select("user","licenciatura",['Ciências da Natureza', 'Educação Física', 'Geografia', 'Letras: Portugês e Literaturas',
+            <%= f.label :licenciatura_e_período %> <br />
+            <%= select("user","licenciatura",['Ciências da Natureza', 'Educação Física', 'Geografia', 'Letras: Português e Literaturas',
             'Matemática','Teatro', 'Napp/Dirlic'],{include_blank:"Selecione"})%>
-            <%= f.select :periodo,['5.º', '6.º', '7.º', '8.º', 'Pedagoga/TAE'], {include_blank:"Selecione"}, class:'periodo_input' %>
+            <%= f.select :periodo,['1.º','2.º','3.º','4.º','5.º', '6.º', '7.º', '8.º', 'Pedagoga/TAE'], {include_blank:"Selecione"}, class:'periodo_input' %>
           </div>
 
           <div class="field">
@@ -99,6 +99,7 @@
   <div id="voltar">
     <button type="button" class="btn btn-warning">Voltar</button>
   </div>
+</div>
 
   <style type="text/css">
     #form_principal {
@@ -127,6 +128,4 @@
       padding-left:4%;
     }
   </style>
-  </div>
-</div>
 <%= javascript_include_tag "registration.js" %>

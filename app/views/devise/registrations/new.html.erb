@@ -11,10 +11,10 @@
       </div>
 
       <div class="field form-group">
-        <%= f.label :licenciatura_e_periodo %>  <br />
-        <%= select("user","licenciatura",['Ciências da Natureza', 'Educação Física', 'Geografia', 'Letras: Portugês e Literaturas',
+        <%= f.label :licenciatura_e_período %>  <br />
+        <%= select("user","licenciatura",['Ciências da Natureza', 'Educação Física', 'Geografia', 'Letras: Português e Literaturas',
         'Matemática','Teatro', 'Napp/Dirlic'],{include_blank:"Selecione"})%>
-        <%= f.select :periodo,['5.º', '6.º', '7.º', '8.º', 'Pedagoga/TAE'], {include_blank:"Selecione"}, class:'periodo_input' %>
+        <%= f.select :periodo,['1.º','2.º','3.º','4.º','5.º', '6.º', '7.º', '8.º', 'Pedagoga/TAE'], {include_blank:"Selecione"}, class:'periodo_input' %>
       </div>
 
        <br />
@@ -51,7 +51,7 @@
       </div>
 
       <div class="field form-group">
-        <%= f.label :matricula %><br />
+        <%= f.label :matrícula %><br />
         <%= f.text_field :matricula ,require:true%>
       </div>
 

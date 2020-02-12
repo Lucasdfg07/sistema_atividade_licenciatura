@@ -4,11 +4,16 @@
   <p id="notice"><%= notice %></p>
   <table border="1" width="60%" class="table table-hover">
   <tr>
-    <th>Título</th>
+    <th>Título da atividade</th>
     <td><%= @activity.titulo %></td>
   </tr>
 
-  <% if @activity.tipo.present?%>
+  <tr>
+    <th>Nome do Evento</th>
+    <td><%= @activity.nome_do_evento %></td>
+  </tr>
+
+  <% if @activity.tipo.present? %>
   <tr>
     <th>Tipo</th>
     <td><%= @activity.tipo %></td>
@@ -17,7 +22,7 @@
 
 
   <tr>
-    <th>Grupo</th>
+    <th>Atividade</th>
     <td><%= @activity.nome_grupo %></td>
   </tr>
 
@@ -28,12 +33,12 @@
 
   <tr>
     <th>Data do evento</th>
-    <td><%= @activity.data_evento %></td>
+    <td><%= @activity.data_evento.strftime('%d/%m/%Y') %></td>
   </tr>
 
   <tr>
     <th>Instituição</th>
-    <td><%= @activity.local_realizacao_atividade %> / <%= @activity.nome_do_evento %></td>
+    <td><%= @activity.local_realizacao_atividade %></td>
   </tr>
 
   <tr>

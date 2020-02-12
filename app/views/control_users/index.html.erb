@@ -1,48 +1,75 @@
 <div class="container col-md-9">
   <p id="notice"><%= notice %></p>
-  <h1>Usuários</h1>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Usuários</h1>
+    </div>
+
+    <div class="col-md-4">
+      <%= link_to 'Clique para ver os Gráficos', control_users_graficos_path, class: 'btn btn-success' %>
+    </div>
+  </div>
 
   <%= form_tag(control_users_index_path, method: :get, class: "form-group")  do %>
     <%= text_field_tag :search, params[:search], class: "form-control text_form", placeholder: 'Pesquise por um aluno!' %>
     <%= submit_tag ("Procurar"), class: "form-control button_form"%>
   <% end %>
+  
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><%= link_to "Ciências da Natureza", control_users_cursos_path(curso: "Ciências da Natureza"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Educação Física", control_users_cursos_path(curso: "Educação Física"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Geografia", control_users_cursos_path(curso: "Geografia"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Letras: Português e Literaturas", control_users_cursos_path(curso: "Letras: Português e Literaturas"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Matemática", control_users_cursos_path(curso: "Matemática"), class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to "Teatro", control_users_cursos_path(curso: "Teatro"), class: 'nav-link' %></li>
+  </ul>
 
   <%= form_with model: @user do |form| %>
-
-  <table class="table table-hover">
-
-    <thead>
-      <tr>
-        <th scope="col">Perfil</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Matricula</th>
-        <th scope="col">Role</th>
-        <th scope="col">Licenciatura</th>
-        <th scope="col"">Relatório de Horas</th>
-        <th scope="col"">Modificação de Horas</th>
-      </tr>
-    </thead>
-
-    <tbody>
-        <% @users.each do |user| %>
+      <table class="table table-hover">
+        <thead>
           <tr>
-            <td>
-              <% if user.avatar.url.present? %>
-                <%= image_tag(user.avatar.url) %>
-              <% end %>
-            </td>
-            <td><%= user.nome %></td>
-            <td><%= user.matricula %></td>
-            <td><%= user.role %></td>
-            <td><%= user.licenciatura %></td>
-            <td><%= link_to 'Relatório do(a) '+user.nome, control_users_horas_user_path(:nome => user.nome), target: "_blank", :class => "btn btn-danger" %></td>
-            <td><%= link_to 'Modificar Horas', new_activity_path(:id => user.id, :nome => user.nome), :class => "btn btn-success"  %> <br /></td>
+            <th scope="col"></th>
+            <th scope="col">Perfil</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Período</th>
+            <th scope="col">Matricula</th>
+            <th scope="col">Role</th>
+            <th scope="col">Licenciatura</th>
+            <th scope="col">Tabela de Horas</th>
+            <th scope="col">Relatório de Horas (PDF)</th>
+            <th scope="col">Modificação de Horas</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+
+        <tbody>
+            <% @users.each do |user| %>
+              <div class="hidden"><%= @cont += 1 %></div>
+              <tr>
+                <td><b><%= @cont %></b></td>
+                <td>
+                  <% if user.avatar.url.present? %>
+                    <%= image_tag(user.avatar.url) %>
+                  <% end %>
+                </td>
+                <td><%= user.nome %></td>
+                <td><%= user.periodo %></td>
+                <td><%= user.matricula %></td>
+                <td><%= user.role %></td>
+                <td><%= user.licenciatura %></td>
+                <td><%= link_to 'Tabela', control_users_horas_user_path(:nome => user.nome), target: "_blank", :class => "btn btn-info" %></td>
+                <td><%= link_to 'Relatório', activities_path(user, user.activities, :nome => user.nome, :format => :pdf), :class => "btn btn-dark" %></td>
+                <td><%= link_to 'Modificar Horas', new_activity_path(:id => user.id, :nome => user.nome), :class => "btn btn-success"  %></td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+      
+      <div class="pagination">
+        <%= will_paginate @users %>
+      </div>
   <% end %>
+</div>
 
 <style type="text/css">
   .text_form {
@@ -71,5 +98,28 @@
     background-color:white;
     color:black!important;
     font-size:1.1em;
+  }
+  @media (max-width: 991.98px) {
+    table {
+      margin-left:-10%;
+    }
+    table thead {
+      display: none;
+    }
+    table tr {
+      border-bottom: 1px solid black;
+    }
+    table td {
+      border: 0;
+    }
+    table td {
+      display: block;
+    }
+    td p {
+      width: 100%!important;
+      overflow:scroll!important;
+      text-overflow:clip!important;
+      text-align:center!important;
+    }
   }
 </style>

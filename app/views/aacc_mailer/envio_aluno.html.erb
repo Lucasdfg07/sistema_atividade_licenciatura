@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <h1>Avaliação de AACC</h1>
+    <h2>Data de envio: <%= Time.now.strftime("%d/%m/%Y %H:%M") %></h2>
+
+    <p><strong>Mensagem:</strong></p>
+    <p>O(a) usuário(a) <strong><%= @current_user.nome %></strong> realizou a avaliação da <strong>AACC</strong>, para o status <strong><%= @activity.status %></strong>, de: </p>
+    <p>Título: <strong><%= @activity.titulo %></strong></p>
+    <p>Atividade: <strong><%= @activity.nome_grupo %></strong></p>
+    <p>Data do Evento: <strong><%= @activity.data_evento.strftime("%d-%m-%Y") %></strong></p>
+    <p>Instituição: <strong><%= @activity.local_realizacao_atividade %></strong></p>
+
+  </body>
+</html>

@@ -14,6 +14,13 @@
  *= require_self
  */
  @import "bootstrap";
+ 
+ .col-md-9, .col-md-2 {
+   display: inline-block;
+ }
+ .col-md-9 {
+   position: absolute;
+ }
 .exibir_menu {
   border: 2px solid black;
   height: 40px;
@@ -65,12 +72,12 @@
   text-align:center;
 }
 .logo_perfil {
-  margin-left:10%;
+  text-align: center;
 }
 .logo_perfil img {
   padding:5px;
 }
-.logo_perfil img, .logo_perfil {
+.logo_perfil img{
   border-radius:100%;
   height:150px;
   width:150px;
@@ -84,6 +91,9 @@
 }
 .btn1, .btn2, .btn3 {
   display: inline;
+}
+.btn1 button:hover, .btn2 button:hover, .btn3 button:hover {
+  color: white!important;
 }
 .botoes > .col > .btn-primary {
   background-color:white;
@@ -161,4 +171,10 @@
 }
 .btn {
   color: white!important;
+}
+.pagination a, .pagination span{
+  padding: 0px 10px;
+}
+.pagination a:hover {
+  background: none;
 }

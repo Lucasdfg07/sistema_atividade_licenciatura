@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_183451) do
+ActiveRecord::Schema.define(version: 2020_02_06_204913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,30 @@ ActiveRecord::Schema.define(version: 2019_08_15_183451) do
   create_table "eventos", force: :cascade do |t|
     t.string "noticia"
     t.string "noticia_foto"
+  end
+
+  create_table "grupos", force: :cascade do |t|
+    t.string "nome_grupo", default: "", null: false
+    t.integer "grupo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "prazo_atpas", force: :cascade do |t|
+    t.string "admin_responsavel"
+    t.date "prazo_final", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "registro_avaliacoes", force: :cascade do |t|
+    t.integer "aluno_id", null: false
+    t.string "nome_aluno", null: false
+    t.string "status", null: false
+    t.string "avaliador", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "id_activity"
   end
 
   create_table "relatnaoformais", force: :cascade do |t|

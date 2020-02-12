@@ -1,0 +1,54 @@
+<table class="table table-hover table_admin">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Título</th>
+      <th>Atividade</th>
+      <th>Horas computadas</th>
+      <th>Data do evento</th>
+      <th>Instituição / Evento</th>
+      <th>Aluno</th>
+      <th>Período</th>
+      <th>Licenciatura</th>
+      <th>Status</th>
+      <th>Avaliador responsavel</th>
+      <th>Observação do Avaliador</th>
+      <% if current_user.role == "admin" %>
+      <th colspan="2">Ação</th>
+      <% else %>
+      <th colspan="3">Ação</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activities_geral.each do |activity| %>
+          <div class="hidden"><%= @cont += 1 %></div>
+          <tr>
+            <td><b><%= @cont %></b></td>
+            <td class="titulo"><p><%= activity.titulo %></p></td>
+            <td class="grupo"><p><%= activity.nome_grupo %></p></td>
+            <td><%= activity.hora_computada %></td>
+            <td><%= activity.data_evento.strftime('%d/%m/%Y') %></td>
+            <td><%= activity.local_realizacao_atividade %> / <%= activity.nome_do_evento %></td>
+            <td><%= activity.user.nome %></td>
+            <td><%= activity.user.periodo %></td>
+            <td><%= activity.user.licenciatura %></td>
+            <td><%= activity.status %></td>
+            <td><%= activity.edited_by %></td>
+            <td><%= activity.feedback %></td>
+            <% if current_user.role != "admin" %>
+              <td><%= link_to 'Exibir', activity %></td>
+              <td></td>
+              <td></td>
+            <% else %>
+              <td><%= link_to 'Analisar', edit_activity_path(activity) %></td>
+            <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <%= will_paginate @activities_geral %>
+</div>

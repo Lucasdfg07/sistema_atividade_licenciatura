@@ -12,6 +12,7 @@
     <% end %>
 
     <% @duvidas.order("id desc").each do |duvida| %>
+    <div class="background-quadros">
       <div class="panel">
         <div class="panel-body">
           <h3><%= duvida.duvida %></h3>
@@ -26,6 +27,7 @@
           <% end %>
         </div>
       </div>
+    </div>
     <% end %>
 
     <% if current_user.role != "admin" %>

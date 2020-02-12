@@ -18,6 +18,9 @@
 
     <p><strong>Mensagem:</strong></p>
     <p>O(a) usuário(a) <strong><%= @current_user.nome %></strong> realizou o envio de uma <strong>AACC</strong> para aprovação!</p>
-
+    <p>Título: <strong><%= @activity.titulo %></strong></p>
+    <p>Atividade: <strong><%= @activity.nome_grupo %></strong></p>
+    <p>Data do Evento: <strong><%= @activity.data_evento.strftime("%d-%m-%Y") %></strong></p>
+    <p>Status da atividade: <strong><%= @activity.status %></strong></p>
   </body>
 </html>

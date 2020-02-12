@@ -1,88 +1,29 @@
 <% if user_signed_in? %>
   <main class="col-md-9">
-    <div class="introducao">
-      <div class="page-header">
-        <h3>Página Inicial</h3>
+    <div class="introducao text-center">
+      <div class="page-header pb-1 mb-4 border-bottom">
+        <h1>BEM-VINDO!</h1>
+        <hr />
+        <h3>Sistema ATPA</h3>
       </div>
 
-      <p>
-        O sistema via <i>web</i> ATPA (Atividade Teórico-Práticas de Aprofundamento) é o
-        produto educacional da pesquisa promovida por Kennya Ferreira Silva Miranda, aluna
-        do Mestrado Profissional em Ensino e suas Tecnologias no Instituto Federal Fluminense
-        <i>campus</i> Campos Centro, sob orientação da professora Gilmara Teixeira Barcelos
-        Peixoto e coorientação da professora Arilise Moraes de Almeida Lopes.
-      </p>
-      <p>
-        Uma das motivações para elaboração desse produto foi identificada pela autora
-        ao dar aula para os últimos períodos dos cursos em licenciaturas no Instituto Federal
-        Fluminense <i>campus</i> Campos Centro, a saber: a inquietação dos alunos em relação à
-        conclusão da carga horária destinada as ATPA.
-      </p>
-      <p>
-        As ATPA são regulamentadas pela resolução N.º 2 de 1.º de julho de 2015
-        (BRASIL, 2015) que define as Diretrizes Curriculares Nacionais para a formação inicial
-        em nível superior (cursos de licenciatura, cursos de formação pedagógica para
-        graduados e cursos de segunda licenciatura) e para a formação continuada, prevendo,
-        entre outros aspectos, o mínimo de 3200 horas de efetivo trabalho acadêmico.
-      </p>
-      <p>
-        O artigo 12, da resolução N.º 2 de 1.º de julho de 2015 (BRASIL, 2015),
-        apresenta que os cursos de formação inicial constituem-se de três núcleos:
-      </p>
-      <div class="espacamento">
-        <p>
-          I- núcleo de estudo de formação inicial geral, das áreas específicas e
-          interdisciplinares, e do campo educacional, seus fundamentos e
-          metodologias, e das diversas realidades educacionais;
+      <h4 style="color: red;">Cadastre suas atividades.</h4>
+      <br />
+      <p class="alinhamento_botao">
+        Consulte antes as ORIENTAÇÕES para o cadastro das ATPA <br />
+        <a href="http://licenciaturas.centro.iff.edu.br/nucleo-de-apoio-a-pratica-profissional/cadastro-de-atpa-atividades-teorico-praticas-de-aprofundamento-a-partir-de-2019.02" class="btn btn-primary">Clique Aqui</a> 
+        <br /><br />
+
+        Para o Registro das ATPA, clique abaixo <br />
+        <% if current_user.role == "admin" %>
+          <%= button_to 'Clique Aqui', new_activity_path, :class => "btn btn-success", disabled: true %>
+        <% else %>
+          <%= link_to 'Clique Aqui', new_activity_path, :class => "btn btn-success" %>
+        <% end %>
         </p>
-        <p>
-          II- núcleo de aprofundamento e diversificação de estudos das áreas de
-          atuação profissional, incluindo os conteúdos específicos e
-          pedagógicos, priorizadas pelo projeto pedagógico das instituições, em
-          sintonia com os sistemas de ensino;
-        </p>
-        <p>
-          III- núcleo de estudos integradores para o enriquecimento curricular.
-          (BRASIL, 2015, p. 9 e 10).
-        </p>
-      </div>
-      <p>
-        O núcleo citado no inciso III deve contemplar, no mínimo, duzentas horas de
-        participação ATPA. As atividades incluem participação em: seminários e estudos
-        curriculares; projetos de iniciação científica e iniciação à docência; residência docente;
-        monitoria e extensão; programas de mobilidade estudantil; atividades de comunicação e
-        expressão, entre outras (BRASIL, 2015).
-      </p>
-      <p>
-        Nesse sentido, para que as ATPA não sejam cumpridas apenas por
-        recomendação da lei, mas sim, como afirma Silva et al. (2012), que contribuam,
-        ampliando o horizonte do conhecimento, fora de sala de aula, para enriquecer as futuras
-        práticas dos docentes, surge o sistema via <i>web</i> ATPA.
-        Este visa contribuir para a melhoria do registro das ATPA, apoiando o armazenamento, discussão e avaliação
-        destas. Destaca-se como grande diferencial do sistema, para o enriquecimento da
-        formação inicial, a área em que o aluno enviará o relatório da atividade realizada,
-        destacando a relação desta com a licenciatura em curso.
-      </p>
-      <p>
-        Assim, pretende-se contribuir, com este produto, para que os futuros docentes
-        possam enriquecer sua formação inicial se tornando professores na sua essência, na sua
-        plenitude, logo, mais preparados, mais engajados e mais responsáveis com a profissão
-        docente, uma vez oferecido, a esses alunos, a oportunidade de contato com diversos
-        saberes. Para Tardif (2014) chegar ao saber plural é preciso uma fusão entre os saberes
-        que o autor preconiza ser necessário para a docência, são eles: saberes da formação
-        profissional, saberes disciplinares, curriculares e experienciais.
-      </p>
     </div>
   </main>
   <% else %>
-    <!-- <div class="col-md-12">
-      <div class="container">
-        <div class="panel panel_header">
-          <h2>Sistema de registro das Atividades Teórico-Práticas de Aprofundamento (ATPA)</h2>
-        </div>
-      </div>
-    </div> -->
-
     <div class="container">
       <div class="inicial_login">
         <h5>Seja bem-vindo!</h5> <br />
@@ -96,6 +37,9 @@
   <% end %>
 
   <style type="text/css">
+    body {
+      overflow-x: none;
+    }
     .page-header {
       border-bottom: 2px solid black;
     }
@@ -103,10 +47,7 @@
       background-color: rgba(240,240,240,0.7);
       padding:10px;
       border-radius:10px;
-      border:2px solid black;
-    }
-    .espacamento {
-      padding-left:30px;
+      box-shadow: -2px 2px 15px rgba(10,10,10,0.3);
     }
     .inicial_login > ul > .btn-primary {
       color: blue!important;
@@ -115,6 +56,9 @@
     .inicial_login > ul > .btn-primary:hover {
       color: white!important;
       background-color: blue;
+    }
+    .alinhamento_botao {
+      text-align: center;
     }
     @media (max-width: 991.98px) {
       main {
